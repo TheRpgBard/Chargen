@@ -1,0 +1,3056 @@
+<html>
+<head>
+<script>
+const aryAlignment = [ [1,33,'Good','Lawful'], [34,68,'Neutral','Neutral'], [69,100,'Evil','Chaotic']];
+const aryGender = [ [1,50,'male'], [51,100,'female']];
+const aryRace = [
+    [01,10,'Dwarf'], [11,20,'Elf'], [21,30,'Gnome'], [31,40,'Half-elf'], [41,50,'Half-orc'], [51,60,'Halfling']
+  , [61,70,'Human'], [71,75,'Aasimar'], [76,80,'Catfolk'], [81,85,'Dhampir'], [86,90,'Tiefling'], [91,92,'Ifrit']
+  , [93,94,'Oread'], [95,96,'Sylph'], [97,98,'Undine'], [99,100,'Vine Leshy']
+];
+const aryClass = [
+    [01,17,'Adept'], [18,35,'Aristocrat'], [36,53,'Commoner'], [54,71,'Expert'], [72,89,'Warrior'], [90,99,'Classed'], [100,100,'Roll Twice']
+  , [101,107,'Barbarian'], [108,114,'Bard'], [115,121,'Cleric'], [122,128,'Druid'], [129,135,'Fighter'], [136,142,'Monk']
+  , [143,149,'Paladin'], [150,156,'Rogue'], [157,163,'Sorcerer'], [164,170,'Wizard'], [171,175,'Cavalier'], [176,180,'Oracle']
+  , [181,185,'Summoner'], [186,190,'Witch'], [191,193,'Ninja'], [194,195,'Magus'], [196,197,'Gunslinger'], [198,199,'Shifter']
+  , [100,100,'Roll Twice']
+];
+const aryLevel = [
+    [ 0,38, 1], [39,58, 2], [59,68, 3], [69,74, 4], [75,80, 5], [81,83, 6], [84,85, 7], [86,87, 8], [88,89, 9], [ 90, 90,10]
+  , [91,91,11], [92,92,12], [93,93,13], [94,94,14], [95,95,15], [96,96,16], [97,97,17], [98,98,18], [99,99,19], [100,100,20]
+];
+
+aryElfTbl1 = [
+	[1,1,'Ael','Knight'],	[2,2,'Aer','Law, Order'],	[3,3,'Af','Ring'],	[4,4,'Ah','Crafty, Sly'],
+	[5,5,'Al','Sea'],	[6,6,'Am','Swan'],	[7,7,'Ama','Beauty, Beautiful'],	[8,8,'An','Hand'],
+	[9,9,'Ang','Glitter'],	[10,10,'Ansr','Rune'],	[11,11,'Ar','Gold, Golden'],	[12,12,'Ari','Silver'],
+	[13,13,'Am','South'],	[14,14,'Aza','Life, Lives'],	[15,15,'Bael','Guardian'],	[16,16,'Bes','Oath'],
+	[17,17,'Cael','Archer, Arrow'],	[18,18,'Cal','Faith'],	[19,19,'Cas','Herald'],	[20,20,'Cla','Rose'],
+	[21,21,'Cor','Legend, Legendary'],	[22,22,'Cy','Onyx'],	[23,23,'Dae','White'],	[24,24,'Dho','Falcon'],
+	[25,25,'Dre','Hound'],	[26,26,'Du','Crescent'],	[27,27,'Eil','Azure, Blue'],	[28,28,'Eir','Sharp'],
+	[29,29,'El','Green'],	[30,30,'Er','Boar'],	[31,31,'Ev','Stag'],	[32,32,'Fera','Champion'],
+	[33,33,'Fi','Rain'],	[34,34,'Fir','Dark'],	[35,35,'Fis','Light'],	[36,36,'Gael','Pegasus'],
+	[37,37,'Gar','Owl'],	[38,38,'Gil','Griffin'],	[39,39,'Ha','Free, Freedom'],	[40,40,'Hu','Horse'],
+	[41,41,'Ia','Day'],	[42,42,'Il','Mist'],	[43,43,'Ja','Staff'],	[44,44,'Jar','Dove'],
+	[45,45,'Ka','Dragon'],	[46,46,'Kan','Eagle'],	[47,47,'Ker','Spell'],	[48,48,'Keth','Wind'],
+	[49,49,'Koeh','Earth'],	[50,50,'Kor','Black'],	[51,51,'Ky','Ruby'],	[52,52,'La','Night'],
+	[53,53,'Laf','Moon'],	[54,54,'Lam','East'],	[55,55,'Lue','Riddle'],	[56,56,'Ly','Wolf'],
+	[57,57,'Mai','Death, Slayer'],	[58,58,'Mal','War'],	[59,59,'Mara','Priest'],	[60,60,'My','Emerald'],
+	[61,61,'Na','Ancient'],	[62,62,'Nai','Oak'],	[63,63,'Nim','Deep'],	[64,64,'Nu','Hope, Hopeful'],
+	[65,65,'Ny','Diamond'],	[66,66,'Py','Sapphire'],	[67,67,'Raer','Unicorn'],	[68,68,'Re','Bear'],
+	[69,69,'Ren','West'],	[70,70,'Rid','Spear'],	[71,71,'Ru','Dream'],	[72,72,'Rau','Star'],
+	[73,73,'Rum','Meadow'],	[74,74,'Ry','Jade'],	[75,75,'Sae','Wood'],	[76,76,'Seh','Soft'],
+	[77,77,'Sel','High'],	[78,78,'Sha','Sun'],	[79,79,'She','Age, Time'],	[80,80,'Si','Cat, Feline'],
+	[81,81,'Sim','North'],	[82,82,'Sol','History, Memory'],	[83,83,'Sum','Water'],	[84,84,'Syl','Faerie'],
+	[85,85,'Ta','Fox'],	[86,86,'Tahl','Blade'],	[87,87,'Tha','Vigil, Vigilance'],	[88,88,'Tho','True, Truth'],
+	[89,89,'Ther','Sky'],	[90,90,'Thro','Lore, Sage'],	[91,91,'Tia','Magic'],	[92,92,'Tra','Tree'],
+	[93,93,'Ty','Crystal'],	[94,94,'Uth','Wizard'],	[95,95,'Ver','Peace'],	[96,96,'Vil','Finger, Point'],
+	[97,97,'Von','Ice'],	[98,98,'Ya','Bridge, Path, Way'],	[99,99,'Za','Royal'],	[100,100,'Zy','Ivory']
+];
+
+aryElfTbl2 = [
+	[1,1,'-ae;-nae','Whisper'],	[2,2,'-ael','Great'],	[3,3,'-aer/-aera','Singer, Song'],	[4,4,'-aias/-aia','Mate, Husband/Wife'],
+	[5,5,'-ah/-aha','Wand'],	[6,6,'-aith/-aira','Home'],	[7,7,'-al/-ala;-la;-lae;-llae','Harmony'],	[8,8,'-ali','Shadow'],
+	[9,9,'-am/-ama','Strider'],	[10,10,'-an/-ana;-a;-ani;-uanna','Make, Maker'],	[11,11,'-ar/-ara;-ra','Man/Woman'],	
+  [12,12,'-ari;-ri','Spring'],	[13,13,'-aro;-ro','Summer'],	[14,14,'-as;-ash;-sah','Bow, Fletcher'],
+	[15,15,'-ath','By, Of, With'],	[16,16,'-avel','Sword'],	[17,17,'-brar;-abrar;-ibrar','Craft, Crafter'],	
+  [18,18,'-dar;-adar;-odar','World'],	[19,19,'-deth;-eath;-eth','Eternal'],	[20,20,'-dre','Charm, Charming'],
+	[21,21,'-drim;-drimme;-udrim','Flight, Flyer'],	[22,22,'-dul','Glade'],	[23,23,'-ean','Ride, Rider'],	
+  [24,24,'-el;-ele/-ela','Hawk'],	[25,25,'-emar','Honor'],	[26,26,'-en','Autumn'],	[27,27,'-er;-erl;-ern','Winter'],	
+  [28,28,'-ess;-esti','Elves, Elvin'],	[29,29,'-evar','Flute'],	[30,30,'-fel;-afel;-efel','Lake'],
+	[31,31,'-hal;-ahal;-ihal','Pale, Weak'],	[32,32,'-har;-ihar;-uhar','Wisdom, Wise'],	[33,33,'-hel;-ahel;-ihel','Sadness, Tears'],	
+  [34,34,'-ian/-ianna;-ia;-ii;-ion','Lord/Lady'],	[35,35,'-iat','Fire'],	[36,36,'-ik','Might, Mighty'],	
+  [37,37,'-il;-iel;-ila;-lie','Gift, Giver'],	[38,38,'-im','Duty'],	[39,39,'-in;-inar;-ine','Brother, Sibling, Sister'],	
+  [40,40,'-ir;-ira;-ire','Dusk'],	[41,41,'-is;-iss;-ist','Scribe, Scroll'],	[42,42,'-ith;-lath;-lith;-lyth','Child, Young'],
+	[43,43,'-kash;-ashk;-okash','Fate'],	[44,44,'-ki','Void'],	[45,45,'-lan;-olan/-lanna;-lean;-ola','Son/Daughter'],	
+  [46,46,'-lam;-ilam;-ulam','Fair'],	[47,47,'-lar;-lirr','Shine'],	[48,48,'-las','Wild'],	[49,49,'-lian/-lia','Master/Mistress'],	
+  [50,50,'-lis;-elis;-lys','Breeze'],	[51,51,'-lon;-ellon','Chief'],	[52,52,'-lyn;-llinn;-lihn','Bolt, Ray'],
+	[53,53,'-mah/-ma;-mahs','Mage'],	[54,54,'-mil;-imil;-umil','Bond, Promise'],	[55,55,'-mus','Ally, Companion'],	
+  [56,56,'-nal;-inal;-onal','Distant, Far'],	[57,57,'-nes','Heart'],	[58,58,'-run;-nine;-nyn','Rite, Ritual'],
+	[59,59,'-nis;-anis','Dawn'],	[60,60,'-on/-onna ','Keep, Keeper'],	[61,61,'-or;-oro','Flower'],	[62,62,'-oth;-othi','Gate'],
+	[63,63,'-que','Forgotten, Lost'],	[64,64,'-quis','Chant, Chanting'],	[65,65,'-rah;-rae;-raee','Beast'],	[66,66,'-rad;-rahd','Leaf'],
+	[67,67,'-rail/-ria;-aral;-ral;-ryl','Hunt, Hunter'],	[68,68,'-ran;-re;-reen','Binding, Shackles'],
+	[69,69,'-reth;-rath','Arcane'],	[70,70,'-ro;-ri;-ron','Walker, Walks'],	[71,71,'-mil;-aruil;-eruil','Noble'],	
+  [72,72,'-sal;-isal;-sali','Honey, Sweet'],	[73,73,'-san','Drink, Wine'],	[74,74,'-sar;-asar;-isar','Quest, Seeker'],
+	[75,75,'-sel;-asel;-isel','Mountain'],	[76,76,'-sha;-she;-shor','Ocean'],	[77,77,'-spar','Fist'],	[78,78,'-tae;-itae','Beloved, Love'],
+	[79,79,'-tas;-itas','Wall, Ward'],	[80,80,'-ten;-iten','Spinner'],	[81,81,'-thal;-ethal/-tha;-etha','Heal, Healer, Healing'],	
+  [82,82,'-thar;-ethar;-ithar','Friend'],	[83,83,'-ther;-ather;-thir','Armor, Protection'],	[84,84,'-thi;-ethil;-thil','Wing'],
+	[85,85,'-thus;-aethus/-thas;-aethas','Harp, Harper'],	[86,86,'-ti;-eti;-til','Eye, Sight'],
+	[87,87,'-tril;-atril/-tria;-atri;-atria','Dance, Dancer'],	[88,88,'-ual;-lua','Holy'],	[89,89,'-uath;-luth;-uth','Lance'],	
+  [90,90,'-us/-ua','Cousin, Kin'],	[91,91,'-van/-vanna','Forest'],	[92,92,'-var;-avar/-vara;-avara','Father/Mother'],
+	[93,93,'-vain;-avain','Spirit'],	[94,94,'-via;-avia','Good fortune / Luck'],	[95,95,'-vin;-avin','Storm'],	
+  [96,96,'-wyn','Music, Musician'],	[97,97,'-ya','Helm'],	[98,98,'-yr/-yn','Bringer'],
+	[99,99,'-yth','Folk, People'],	[100,100,'-zair;-azair/-zara;-ezara','Lightning']
+];
+
+aryDwarf1 = [
+	[1,2,'A-/Al-','Forge'],
+	[3,4,'An','Enemy/Giant'],
+	[5,6,'Ar-/Ara-','Blood'],
+	[7,8,'Az-','Rock'],
+	[9,10,'B-/Bal-','Anger/Wrath'],
+	[11,12,'Bel-','First'],
+	[13,14,'Bar-/Bari-','Crushing/Mighty'],
+	[15,16,'Baz-','Fire/Of the Flame'],
+	[17,18,'Bof-','Great/ Ancient'],
+	[19,20,'Bol-','Hid den /Secret'],
+	[21,22,'D-/Dal-','Stout/Heavy'],
+	[23,24,'Dar/Dare-','Burned / Burning'],
+	[25,26,'Del-','Steel'],
+	[27,28,'Dol-','Weapon/Sword'],
+	[29,30,'Dor-/Dora-','Red'],
+	[31,32,'Dur-/Duri-','Fierce'],
+	[33,34,'Duer-','Dark/Darkness'],
+	[35,36,'Dur-/Duri-','Wolf'],
+	[37,38,'El-','Goblin/Foe'],
+	[39,40,'Er-/Eri-','Elder/Old'],
+	[41,42,'Fal-/Fall-','Strong/Strongest/Strength'],
+	[43,44,'Far-','Of the Stronghold'],
+	[45,46,'Gar-','Bear/Of the Bear'],
+	[47,48,'Gil-','Fire / Fiery'],
+	[49,50,'Gim-','Glad/Cheerful'],
+	[51,52,'Gian-','Forgotten/Lost'],
+	[53,54,'Glor-/Glori-','Silver /G1itter/ G1ittering'],
+	[55,56,'Har-','Hearty / Sta1wart'],
+	[57,58,'Hel-','God\'s / Of the Gods'],
+	[59,60,'Jar-','Ore / Ugly'],
+	[61,62,'Kil-','Proud/Powerful'],
+	[63,64,'Ma-/Mar-','Gold/Golden'],
+	[65,66,'Mor-/Mori-','Brave/ Bold'],
+	[67,68,'Nal-','Honored/Honorable'],
+	[69,70,'Nor-/Nora-','Mithril'],
+	[71,72,'Nur-/Nura-','Steady/Sure'],
+	[73,74,'O-/Ol-','Large/Fat'],
+	[75,76,'Or-/Ori-','Gem'],
+	[77,78,'Ov-','Cunning/Wise'],
+	[79,80,'Rei-','Vermin'],
+	[81,82,'Th-/Ther-','Oath/Ot Oaths'],
+	[83,84,'Tho-/Thor-','Noble/Loyal'],
+	[85,86,'Thr-/Thra','Black'],
+	[87,88,'Tor-/Tore-','Soul'],
+	[89,90,'Ur-/Urni-','Death /Skull'],
+	[91,92,'Val-','Dragon/Magic/ Magical'],
+	[93,94,'Von-','Tunnel/Of the Tunnel'],
+	[95,96,'Whur-','Iron'],
+	[97,98,'Wer-/Wera-','Battle/War'],
+	[99,100,'Yur-','Rune']
+]
+
+aryDwarf2 = [
+	[1,2,'-aim/-and','Slayer/Killer'],
+	[3,4,'-ain/-arn','Fist/Striker'],
+	[5,6,'-ak','Ax / Cutter'],
+	[7,8,'-ar/-ard','Guard/Guardian'],
+	[9,10,'-auk','Clansman/Cr after'],
+	[11,12,'-bere','Gauntlet/Hand'],
+	[13,14,'-bir/-bin','Keeper / Warden'],
+	[15,16,'-dak','Mine/Miner'],
+	[17,18,'-dal','Ale/Drink/ Drinker'],
+	[19,20,'-din','Smith / B1acksmith'],
+	[21,22,'-el','Warrior'],
+	[23,24,'-ent','Mountain'],
+	[25,26,'-erl','Father'],
+	[27,28,'-gal','Shield'],
+	[29,30,'-gar/-gath','Lurker/Thief'],
+	[31,32,'-gan','Mason'],
+	[33,34,'-gen','Stone/Monolith'],
+	[35,36,'-grim','Eternal/Lasting'],
+	[37,38,'-gur/-guk','Boar/ Steed'],
+	[39,40,'-ias','Anvil'],
+	[41,42,'-i/-ik','Brother/Ally'],
+	[43,44,'-ili/-li','Beard /Pride'],
+	[45,46,'-im /-rim','King'],
+	[47,48,'-in/-rin','Dwarf/Dwarves/People'],
+	[49,50,'-ir/-init','Giver'],
+	[51,52,'-kas','Scout/Seeker'],
+	[53,54,'-kral','Hall /Stronghold'],
+	[55,56,'-lond','Friend'],
+	[57,58,'-o/-oak','Barrow/Tomb'],
+	[59,60,'-on/-lon','Raid/Raider'],
+	[61,62,'-or/-ror','Riddle / Riddlernaster'],
+	[63,64,'-oril/-oric','judge /Lawgiver'],
+	[65,66,'-rak','Hammer / Sm a sher'],
+	[67,68,'-ral','Heart/Spirit'],
+	[69,70,'-ric','Chest/Belly'],
+	[71,72,'-rid','Artificer/Craftsman'],
+	[73,74,'-rim','Spear/Stabber'],
+	[75,76,'-ring','Armor / Hide / Skin'],
+	[77,78,'-ster/-stili','Kin /Cousin'],
+	[79,80,'-sun','Rider'],
+	[81,82,'-ten','Son/Child of'],
+	[83,84,'-thal','Mattock/Crusher'],
+	[85,86,'-then','Earth/ Earthen/Of the Earth'],
+	[87,88,'-thic','Champion/Victor'],
+	[89,90,'-thur','H un ter / Way fi nder'],
+	[91,92,'-ut/unt','Highborn / Nobleman'],
+	[93,94,'-ur/-rur','Master/Craftsman'],
+	[95,96,'-urt','Berserker / Ba ttlerager'],
+	[97,98,'-val','Messenger'],
+	[99,100,'-var/-villi','Outcast/Exile']
+]
+
+aryDwarf3 = [
+	[1,2,'-a/-aed','Hearth'],
+	[3,4,'-ala/-la','Blessing'],
+	[5,6,'-alsia','Partner/Wife'],
+	[7,8,'-ana','Eye/Eyes'],
+	[9,10,'-ani','Bearer'],
+	[11,12,'-astr','Ring/Jewelry'],
+	[13,14,'-bela','Ally/Sister'],
+	[15,16,'-bera/-bena','Will/Faith'],
+	[17,18,'-bo','Hair/Braid'],
+	[19,20,'-bryn','Wiseworman'],
+	[21,22,'-drid','Spinner / Weaver'],
+	[23,24,'-deth','Guard/Guardian'],
+	[25,26,'-dis','Gift/Riches'],
+	[27,28,'-dred','Maiden'],
+	[29,30,'-dris','Heart / Love / Lovely'],
+	[31,32,'-esli','Hand/Skill'],
+	[33,34,'-gret','Daughter/Child of'],
+	[35,36,'-gunn','Warrioress'],
+	[37,38,'-hild','Speech/Voice'],
+	[39,40,'-ia','Priestess/Holy Woman'],
+	[41,42,'-ida','Air/Breath'],
+	[43,44,'-iess','Mother/Matriarch'],
+	[45,46,'-iff','Beauty /Jewel'],
+	[47,48,'-ifra','Craftswoman/Cook / Seamstress'],
+	[49,50,'-ila','Joy'],
+	[51,52,'-ild','Fair/Kindness'],
+	[53,54,'-ina','Art/Artisan / Craft'],
+	[55,56,'-ip/ippa','Pledge/Promise'],
+	[57,58,'-isi','Treasure/Treasure of'],
+	[59,60,'-iz','Fox'],
+	[61,62,'-ja','Mistress'],
+	[63,64,'-kara','Healer'],
+	[65,66,'-li/-ili','Twin/Twin of/Sister of'],
+	[67,68,'-lydd','Vindicator'],
+	[69,70,'-lin','Song/Singer'],
+	[71,72,'-mora/-moa','Seer / Prophetess'],
+	[73,74,'-ola','Brewer/Brew/ Ale'],
+	[75,76,'-on/-ona','White/Pure'],
+	[77,78,'-ora/-oa','Tender / Protector'],
+	[79,80,'-re/-rra','Tree/Root'],
+	[81,82,'-ren','Life /Living/Birth of'],
+	[83,84,'-serd','Virtue/Virtuous'],
+	[85,86,'-shar/-sha','Moon'],
+	[87,88,'-thra','Escort /Matron'],
+	[89,90,'-tia','River/Pool'],
+	[91,92,'-tryd','Heroine'],
+	[93,94,'-unn','Highborn/Noblewoman'],
+	[95,96,'-wynn','Grace/ Gracious'],
+	[97,98,'-ya','Guest/Hostess'],
+	[99,100,'-ydd','Queen']
+]
+
+aryDwarf4 = [
+	[1,4,'-ack','Bridge'],
+	[5,8,'-arr/-aln','Tower'],
+	[9,12,'-bek','Pass / Ford'],
+	[13,16,'-oral','Hall'],
+	[17,19,'-dar/-dann','Hearthplace'],
+	[20,22,'-duum','Home/Manor'],
+	[23,25,'-dukr','Wail'],
+	[26,28,'-eft','Castle'],
+	[29,31,'-erg','Town'],
+	[32,34,'-est','Cavern'],
+	[35,37,'-fik','Temple'],
+	[38,40,'-gak','Homeland'],
+	[41,43,'-gim','Mountaihhold'],
+	[44,46,'-gyth','Mine'],
+	[47,49,'-hak','Bulwark'],
+	[50,52,'-hig','Garrison'],
+	[53,55,'-jak','Hold'],
+	[56,58,'-jyr/-jynd','Camp'],
+	[59,61,'-kak','Hamlet'],
+	[62,64,'-krak','Fortress'],
+	[65,67,'-lagg','Lair'],
+	[68,70,'-lode','Citadel'],
+	[71,73,'-lyx/-lynd','Grange'],
+	[74,76,'-malk','Village'],
+	[77,79,'-mek','Outpost'],
+	[80,82,'-nore/-noe','Point'],
+	[83,85,'-rak','Bastion'],
+	[86,88,'-ral','Birthplace'],
+	[89,91,'-sten','Rampart'],
+	[92,94,'-tek','Cradle'],
+	[95,97,'-vir/-vin','Barrier'],
+	[98,100,'-zak','Anvil']
+]
+
+aryHalfling1 = [
+	[1,3,'Arum','Great, hero, heroic, mighty'],
+	[4,5,'Add','Ax, sharp, sword'],
+	[6,8,'Baer','Living, open, tree woodland'],
+	[9,11,'Bar','Distinguished, false, hidden shadow'],
+	[12,14,'Callad','Cousin, friendly, kin, related'],
+	[15,16,'Chilk','Beautiful, fair, haven, home '],
+	[17,19,'Dal','Skill, skilled, master/mistress, useful'],
+	[20,22,'Din','Tool, useful, weapon, valued '],
+	[23,25,'Eaus','Giant, powerful '],
+	[26,27,'Erf','Friend, friendly, kind '],
+	[28,29,'Enn','Companion, essential, husband/wife, vital '],
+	[30,31,'Faer','Blue, cool, ice, sapphire '],
+	[32,34,'Flan','Earth, hard, rocky, stone '],
+	[35,36,'Fen','Earthen, firm, hill, hills, sturdy '],
+	[37,39,'Gaer','Defense, shield, strong, protective '],
+	[40,42,'Gar','Father/mother, first, honored '],
+	[43,44,'Hed','Confusing, mystery, riddle, secret '],
+	[45,46,'Herl','Noble, ruler, virtue, virtuous '],
+	[47,48,'Ien','Enemy, evil, pain, wounded '],
+	[49,51,'Jan','Blessed, divine, god/goddess '],
+	[52,53,'Kaer','Fire, hot, red, ruby '],
+	[54,53,'Len','Good, jewel, treasure, trusted '],
+	[54,59,'Lun','Complex, device, mechanical, tinkerer'],
+	[60,61,'Mikk','Desert, harsh, severe, void '],
+	[62,64,'Neb','Child, innocent, new, young '],
+	[65,66,'Oaen','Flexible, knot, maze, twisted '],
+	[67,68,'Ow','Beloved, loving, warm, welcome'],
+	[69,70,'Pall','Cloak, cloth, soft, supple '],
+	[71,72,'Pin','Air, free, swift, wind '],
+	[73,74,'Raer','Holiday, joy, joyful, ritual '],
+	[75,76,'Ras','Emerald, green, homeland, park '],
+	[77,78,'Seg','Deep, distance, far, long '],
+	[79,81,'Skor','Art, craft, knowledge, wise'],
+	[82,84,'Tikk','Animal, furry, hairy, pet '],
+	[85,87,'Uran','Armored, guardian, keeper, supportive '],
+	[88,90,'Urd','Black, blind, mole'],
+	[91,93,'Van','Allied, dedicated, friend, servant '],
+	[94,96,'Var','Funny, humorous, jester, joke '],
+	[97,98,'Wann','False, illlusionist, sly, thief '],
+	[99,100,'Wed','Diamond, hard, powerful, white']
+];
+
+aryHalfling2 = [
+	[1,3,'Arv','Badger, fearless, fierce '],
+	[4,5,'Baris','Curse, fool, hapless, unlucky '],
+	[6,8,'Brand','Adventurous, bold, courage, hero '],
+	[9,10,'Bren','Black, cold, dark, night '],
+	[11,13,'Cal','Curious, joker, quest, riddle '],
+	[14,15,'Chen','Beard, hairy, handsome, warm '],
+	[16,18,'Cyrr','Defender, elder, strong '],
+	[19,20,'Dair','Playful, rascal, thief '],
+	[21,23,'Dal','Home, provider, shield '],
+	[24,25,'Deree','Brother/sister, squire, stout '],
+	[26,28,'Dric','Lazy, mule, pony, stubborn '],
+	[29,30,'Eere','Deer, jumping, high, tall '],
+	[31,33,'Essel','Arrow, bow, fleet, flying '],
+	[34,35,'Fur','Comfortable, common, heritage, snug'],
+	[36,38,'Galan','Burrow, earth, field, house '],
+	[39,40,'Gen','Bargain, diligent, merchant, trader '],
+	[41,43,'Gren','Baker, cook, feast, green, plenty '],
+	[44,45,'Ien','Blue, clean, sweet, water '],
+	[46,48,'Illi','Big, deity, greatest, power '],
+	[49,50,'Indy','Beautiful, kind, forest, woodland '],
+	[51,53,'Iss','Festive, gala, happy, village '],
+	[54,56,'Kal','Cunning, fox, prankster '],
+	[57,58,'Kep','Child, small, young '],
+	[59,61,'Kin','Dance, dancing, fire, quick '],
+	[62,63,'Li','Bard, legendary, story '],
+	[64,66,'Llalee','Food, happy, hearth, home '],
+	[67,68,'Lur','Hard, stone, white '],
+	[69,71,'Mel','Lad/maiden, playful, wild '],
+	[72,73,'Opee','Cheese, lasting, timeless, yellow'],
+	[74,76,'Ped','Cherry, red, copper '],
+	[77,79,'Pery','Bower, loyal, love, romance '],
+	[80,82,'Penel','Crafter, merit, valuable, weaver '],
+	[83,85,'Reen','Peaceful, peacekeeper, sheriff, warrior'],
+	[86,88,'Rill','Farm, farmer, food, life '],
+	[89,90,'Rorl','Divine, eternal, immortal '],
+	[91,92,'Sheel','Air, clouds, rainy, weather '],
+	[93,95,'Thea','Feet, honor, proud '],
+	[96,97,'Ur','Deadly, final, judge, stern '],
+	[98,99,'Wort','Brown, herb, silent, mushroom '],
+	[100,100,'Yon','Father/mother, teacher, wise']
+];
+
+aryHalfling3 = [
+	[1,1,'Earth',''],
+	[2,3,'Fast',''],
+	[4,4,'Glitter',''],
+	[5,5,'Gold/warm',''],
+	[6,6,'Honor',''],
+	[7,7,'Iron/laughing',''],
+	[8,8,'Lightning',''],
+	[9,9,'Moon',''],
+	[10,11,'Shadow',''],
+	[12,12,'Silver',''],
+	[13,14,'Sly',''],
+	[15,15,'Small/little',''],
+	[16,16,'Steel/smooth',''],
+	[17,17,'Stone/stout',''],
+	[18,18,'Sun',''],
+	[19,19,'Swift',''],
+	[20,20,'Wild','']
+];
+
+aryHalfling4 = [
+	[1,1,'Bones',''],
+	[2,3,'Caller',''],
+	[4,4,'Cloak',''],
+	[5,5,'Eye',''],
+	[6,6,'Foot',''],
+	[7,7,'Fox',''],
+	[8,8,'Gold',''],
+	[9,10,'Hand',''],
+	[11,12,'Heart',''],
+	[13,13,'Leaf',''],
+	[14,14,'Man/Lady',''],
+	[15,15,'Skin',''],
+	[16,16,'Strider',''],
+	[17,18,'Wanderer',''],
+	[19,19,'Will',''],
+	[20,20,'Whisper','']
+];
+
+aryTiefling1 = [
+[1,1,'Aby']
+, [2,2,'Bael']
+, [3,3,'Cy']
+, [4,4,'Des']
+, [5,5,'Ea']
+, [6,6,'Fae']
+, [7,7,'Gia']
+, [8,8,'Haem']
+, [9,9,'Ixi']
+, [10,10,'Jae']
+, [11,11,'Kae']
+, [12,12,'Luci']
+, [13,13,'Mae']
+, [14,14,'Na']
+, [15,15,'Oci']
+, [16,16,'Prae']
+, [17,17,'Qui']
+, [18,18,'Rae']
+, [19,19,'Saa']
+, [20,20,'Thae']
+, [21,21,'Uru']
+, [22,22,'Vae']
+, [23,23,'Woe']
+, [24,24,'Xo']
+, [25,25,'Ymi']
+, [26,26,'Zae']
+, [27,27,'Arka']
+, [28,28,'Beli']
+, [29,29,'Cora']
+, [30,30,'Drea']
+, [31,31,'Elga']
+, [32,32,'Fyra']
+, [33,33,'Gri']
+, [34,34,'Haela']
+, [35,35,'Iska']
+, [36,36,'Jori']
+, [37,37,'Kira']
+, [38,38,'Lyth']
+, [39,39,'Mora']
+, [40,40,'Neri']
+, [41,41,'Ophira']
+, [42,42,'Phira']
+, [43,43,'Qira']
+, [44,44,'Reva']
+, [45,45,'Sira']
+, [46,46,'Tha']
+, [47,47,'Uri']
+, [48,48,'Vara']
+, [49,49,'Wara']
+, [50,50,'Xara']
+, [51,51,'Yara']
+, [52,52,'Zara']
+, [53,53,'Ash']
+, [54,54,'Brim']
+, [55,55,'Cal']
+, [56,56,'Dagon']
+, [57,57,'Ere']
+, [58,58,'Fury']
+, [59,59,'Gor']
+, [60,60,'Heth']
+, [61,61,'In']
+, [62,62,'Jor']
+, [63,63,'Krel']
+, [64,64,'Lar']
+, [65,65,'Mal']
+, [66,66,'Nath']
+, [67,67,'Orix']
+, [68,68,'Pra']
+, [69,69,'Quor']
+, [70,70,'Rak']
+, [71,71,'Sei']
+, [72,72,'Tharn']
+, [73,73,'Urth']
+, [74,74,'Vorn']
+, [75,75,'Wor']
+, [76,76,'Xal']
+, [77,77,'Yrn']
+, [78,78,'Zar']
+, [79,79,'An']
+, [80,80,'Bry']
+, [81,81,'Cel']
+, [82,82,'Drak']
+, [83,83,'Ebon']
+, [84,84,'Fell']
+, [85,85,'Geth']
+, [86,86,'Hex']
+, [87,87,'Ir']
+, [88,88,'Jez']
+, [89,89,'Kaz']
+, [90,90,'Lith']
+, [91,91,'Morg']
+, [92,92,'Nex']
+, [93,93,'Or']
+, [94,94,'Phyx']
+, [95,95,'Qy']
+, [96,96,'Riv']
+, [97,97,'Syth']
+, [98,98,'Tyr']
+, [99,99,'Uz']
+, [100,100,'Vex']
+, [101,101,'Wy']
+, [102,102,'Xyr']
+, [103,103,'Yr']
+, [104,104,'Zev']
+];
+
+aryTiefling2 = [
+[1,1,'la']
+, [2,2,'ra']
+, [3,3,'na']
+, [4,4,'th']
+, [5,5,'ria']
+, [6,6,'lia']
+, [7,7,'nia']
+, [8,8,'dra']
+, [9,9,'sha']
+, [10,10,'tha']
+, [11,11,'s']
+, [12,12,'us']
+, [13,13,'as']
+, [14,14,'is']
+, [15,15,'yn']
+, [16,16,'on']
+, [17,17,'ia']
+, [18,18,'or']
+, [19,19,'ax']
+, [20,20,'eth']
+, [21,21,'ia']
+, [22,22,'el']
+, [23,23,'ar']
+, [24,24,'ar']
+, [25,25,'al']
+, [26,26,'ine']
+, [27,27,'ir']
+, [28,28,'ara']
+, [29,29,'era']
+, [30,30,'ora']
+, [31,31,'ys']
+, [32,32,'or']
+, [33,33,'oth']
+, [34,34,'ash']
+, [35,35,'in']
+, [36,36,'ess']
+, [37,37,'ina']
+, [38,38,'oth']
+, [39,39,'eth']
+, [40,40,'ira']
+, [41,41,'iel']
+, [42,42,'ith']
+, [43,43,'ira']
+, [44,44,'on']
+, [45,45,'or']
+, [46,46,'ion']
+, [47,47,'ax']
+, [48,48,'ar']
+, [49,49,'ion']
+, [50,50,'ys']
+, [51,51,'yn']
+, [52,52,'on']
+, [53,53,'or']
+, [54,54,'ith']
+, [55,55,'is']
+, [56,56,'al']
+, [57,57,'ys']
+, [58,58,'ara']
+, [59,59,'essa']
+, [60,60,'ith']
+, [61,61,'ara']
+, [62,62,'ith']
+, [63,63,'ath']
+, [64,64,'is']
+, [65,65,'eth']
+, [66,66,'is']
+, [67,67,'ath']
+, [68,68,'yn']
+, [69,69,'or']
+, [70,70,'ira']
+, [71,71,'ys']
+, [72,72,'ith']
+, [73,73,'or']
+, [74,74,'in']
+, [75,75,'al']
+, [76,76,'ith']
+, [77,77,'yn']
+, [78,78,'ir']
+, [79,79,'ith']
+, [80,80,'an']
+, [81,81,'ath']
+, [82,82,'ith']
+, [83,83,'ys']
+, [84,84,'ith']
+, [85,85,'ar']
+, [86,86,'al']
+, [87,87,'ys']
+, [88,88,'ira']
+, [89,89,'is']
+, [90,90,'yn']
+, [91,91,'ar']
+, [92,92,'ith']
+, [93,93,'yn']
+, [94,94,'eth']
+, [95,95,'or']
+, [96,96,'ith']
+, [97,97,'ith']
+, [98,98,'ys']
+, [99,99,'on']
+, [100,100,'or']
+, [101,101,'ion']
+, [102,102,'ath']
+, [103,103,'in']
+, [104,104,'eth']
+];
+
+aryVineLeshy1 = [
+[1,1,'Aloe']
+, [2,2,'Aspen']
+, [3,3,'Bamboo']
+, [4,4,'Basil']
+, [5,5,'Berry']
+, [6,6,'Birch']
+, [7,7,'Blossom']
+, [8,8,'Briar']
+, [9,9,'Buckthorn']
+, [10,10,'Cedar']
+, [11,11,'Cherry']
+, [12,12,'Clover']
+, [13,13,'Cypress']
+, [14,14,'Dandelion']
+, [15,15,'Elder']
+, [16,16,'Fern']
+, [17,17,'Fir']
+, [18,18,'Foxglove']
+, [19,19,'Ginkgo']
+, [20,20,'Hawthorn']
+, [21,21,'Hazel']
+, [22,22,'Heather']
+, [23,23,'Holly']
+, [24,24,'Honeysuckle']
+, [25,25,'Ivy']
+, [26,26,'Juniper']
+, [27,27,'Laurel']
+, [28,28,'Lavender']
+, [29,29,'Leaf']
+, [30,30,'Lichen']
+, [31,31,'Lily']
+, [32,32,'Linden']
+, [33,33,'Magnolia']
+, [34,34,'Maple']
+, [35,35,'Moss']
+, [36,36,'Myrtle']
+, [37,37,'Oak']
+, [38,38,'Olive']
+, [39,39,'Palm']
+, [40,40,'Pine']
+, [41,41,'Poppy']
+, [42,42,'Rose']
+, [43,43,'Rowan']
+, [44,44,'Sage']
+, [45,45,'Sequoia']
+, [46,46,'Spruce']
+, [47,47,'Sycamore']
+, [48,48,'Thistle']
+, [49,49,'Thorn']
+, [50,50,'Tulip']
+, [51,51,'Violet']
+, [52,52,'Walnut']
+, [53,53,'Willow']
+, [54,54,'Yew']
+, [55,55,'Zinnia']
+, [56,56,'Arbor']
+, [57,57,'Beech']
+, [58,58,'Blaze']
+, [59,59,'Bloom']
+, [60,60,'Bracken']
+, [61,61,'Bud']
+, [62,62,'Bur']
+, [63,63,'Cactus']
+, [64,64,'Chicory']
+, [65,65,'Cotton']
+, [66,66,'Creeper']
+, [67,67,'Daisy']
+, [68,68,'Dew']
+, [69,69,'Elm']
+, [70,70,'Eucalyptus']
+, [71,71,'Flower']
+, [72,72,'Frond']
+, [73,73,'Garden']
+, [74,74,'Garland']
+, [75,75,'Grove']
+, [76,76,'Hedgerow']
+, [77,77,'Hibiscus']
+, [78,78,'Hyacinth']
+, [79,79,'Jade']
+, [80,80,'Jasmine']
+, [81,81,'Kudzu']
+, [82,82,'Lavender']
+, [83,83,'Leaf']
+, [84,84,'Lilac']
+, [85,85,'Lily']
+, [86,86,'Magnolia']
+, [87,87,'Meadow']
+, [88,88,'Mint']
+, [89,89,'Mulberry']
+, [90,90,'Mushroom']
+, [91,91,'Myrtle']
+, [92,92,'Nettle']
+, [93,93,'Oak']
+, [94,94,'Olive']
+, [95,95,'Orchid']
+, [96,96,'Peony']
+, [97,97,'Petal']
+, [98,98,'Pine']
+, [99,99,'Pistil']
+, [100,100,'Posy']
+, [101,101,'Primrose']
+, [102,102,'Reed']
+, [103,103,'Root']
+, [104,104,'Sap']
+, [105,105,'Seed']
+, [106,106,'Shade']
+, [107,107,'Shrub']
+, [108,108,'Sprout']
+];
+
+aryVineLeshy2 = [
+[1,1,'bloom']
+, [2,2,'branch']
+, [3,3,'bud']
+, [4,4,'claw']
+, [5,5,'fern']
+, [6,6,'flower']
+, [7,7,'leaf']
+, [8,8,'petal']
+, [9,9,'root']
+, [10,10,'seed']
+, [11,11,'shade']
+, [12,12,'shrub']
+, [13,13,'sprout']
+, [14,14,'stem']
+, [15,15,'thorn']
+, [16,16,'vine']
+, [17,17,'whip']
+, [18,18,'wood']
+, [19,19,'bark']
+, [20,20,'blossom']
+, [21,21,'bramble']
+, [22,22,'briar']
+, [23,23,'bur']
+, [24,24,'creeper']
+, [25,25,'dew']
+, [26,26,'frond']
+, [27,27,'garden']
+, [28,28,'garland']
+, [29,29,'grove']
+, [30,30,'hedge']
+, [31,31,'hibiscus']
+, [32,32,'ivy']
+, [33,33,'jade']
+, [34,34,'jasmine']
+, [35,35,'kudzu']
+, [36,36,'leaf']
+, [37,37,'lilac']
+, [38,38,'lily']
+, [39,39,'magnolia']
+, [40,40,'meadow']
+, [41,41,'mint']
+, [42,42,'mulberry']
+, [43,43,'mushroom']
+, [44,44,'myrtle']
+, [45,45,'nettle']
+, [46,46,'orchid']
+, [47,47,'peony']
+, [48,48,'pistil']
+, [49,49,'posy']
+, [50,50,'primrose']
+, [51,51,'reed']
+, [52,52,'sap']
+, [53,53,'seed']
+, [54,54,'shade']
+, [55,55,'shrub']
+, [56,56,'sprout']
+, [57,57,'stem']
+, [58,58,'thorn']
+, [59,59,'vine']
+, [60,60,'whip']
+, [61,61,'wood']
+, [62,62,'blossom']
+, [63,63,'bramble']
+, [64,64,'briar']
+, [65,65,'creeper']
+, [66,66,'dew']
+, [67,67,'frond']
+, [68,68,'garden']
+, [69,69,'garland']
+, [70,70,'grove']
+, [71,71,'hedge']
+, [72,72,'hibiscus']
+, [73,73,'ivy']
+, [74,74,'jade']
+, [75,75,'jasmine']
+, [76,76,'kudzu']
+, [77,77,'leaf']
+, [78,78,'lilac']
+, [79,79,'lily']
+, [80,80,'magnolia']
+, [81,81,'meadow']
+, [82,82,'mint']
+, [83,83,'mulberry']
+, [84,84,'mushroom']
+, [85,85,'myrtle']
+, [86,86,'nettle']
+, [87,87,'orchid']
+, [88,88,'peony']
+, [89,89,'pistil']
+, [90,90,'posy']
+, [91,91,'primrose']
+, [92,92,'reed']
+, [93,93,'sap']
+, [94,94,'shade']
+, [95,95,'shrub']
+, [96,96,'sprout']
+, [97,97,'stem']
+, [98,98,'thorn']
+, [99,99,'vine']
+, [100,100,'whip']
+, [101,101,'wood']
+];
+
+aryDhampir1 = [
+[1,1,'Ala']
+, [2,2,'Baro']
+, [3,3,'Caro']
+, [4,4,'Dra']
+, [5,5,'Ebo']
+, [6,6,'Fero']
+, [7,7,'Gala']
+, [8,8,'Haro']
+, [9,9,'Iva']
+, [10,10,'Jaro']
+, [11,11,'Kara']
+, [12,12,'Lumo']
+, [13,13,'Mara']
+, [14,14,'Nero']
+, [15,15,'Ono']
+, [16,16,'Palo']
+, [17,17,'Qiro']
+, [18,18,'Rava']
+, [19,19,'Saro']
+, [20,20,'Tero']
+, [21,21,'Ulo']
+, [22,22,'Vira']
+, [23,23,'Waro']
+, [24,24,'Xaro']
+, [25,25,'Yaro']
+, [26,26,'Zoro']
+, [27,27,'Alu']
+, [28,28,'Belu']
+, [29,29,'Celu']
+, [30,30,'Delu']
+, [31,31,'Eru']
+, [32,32,'Felu']
+, [33,33,'Gilu']
+, [34,34,'Hilu']
+, [35,35,'Ilu']
+, [36,36,'Jelu']
+, [37,37,'Kelu']
+, [38,38,'Lilu']
+, [39,39,'Milu']
+, [40,40,'Nilu']
+, [41,41,'Olu']
+, [42,42,'Pilu']
+, [43,43,'Qilu']
+, [44,44,'Rilu']
+, [45,45,'Silu']
+, [46,46,'Tilu']
+, [47,47,'Ulu']
+, [48,48,'Vilu']
+, [49,49,'Wilu']
+, [50,50,'Xilu']
+, [51,51,'Yilu']
+, [52,52,'Zilu']
+, [53,53,'Aran']
+, [54,54,'Beran']
+, [55,55,'Ciran']
+, [56,56,'Daran']
+, [57,57,'Eran']
+, [58,58,'Faran']
+, [59,59,'Giran']
+, [60,60,'Haran']
+, [61,61,'Iran']
+, [62,62,'Jiran']
+, [63,63,'Karan']
+, [64,64,'Laran']
+, [65,65,'Maran']
+, [66,66,'Naran']
+, [67,67,'Oran']
+, [68,68,'Paran']
+, [69,69,'Qaran']
+, [70,70,'Raran']
+, [71,71,'Saran']
+, [72,72,'Taran']
+, [73,73,'Uran']
+, [74,74,'Varan']
+, [75,75,'Waran']
+, [76,76,'Xaran']
+, [77,77,'Yaran']
+, [78,78,'Zaran']
+, [79,79,'Adan']
+, [80,80,'Bedan']
+, [81,81,'Cidan']
+, [82,82,'Dadan']
+, [83,83,'Edan']
+, [84,84,'Fidan']
+, [85,85,'Gidan']
+, [86,86,'Hidan']
+, [87,87,'Idan']
+, [88,88,'Jidan']
+, [89,89,'Kidan']
+, [90,90,'Lidan']
+, [91,91,'Midan']
+, [92,92,'Nidan']
+, [93,93,'Odan']
+, [94,94,'Pidan']
+, [95,95,'Qidan']
+, [96,96,'Ridan']
+, [97,97,'Sidan']
+, [98,98,'Tidan']
+, [99,99,'Udan']
+, [100,100,'Vidan']
+, [101,101,'Widan']
+, [102,102,'Xidan']
+, [103,103,'Yidan']
+, [104,104,'Zidan']
+];
+
+aryDhampir2 = [
+[1,1,'dine']
+, [2,2,'thar']
+, [3,3,'vok']
+, [4,4,'ra']
+, [5,5,'mir']
+, [6,6,'vyn']
+, [7,7,'kos']
+, [8,8,'lin']
+, [9,9,'mos']
+, [10,10,'dar']
+, [11,11,'nal']
+, [12,12,'reth']
+, [13,13,'zor']
+, [14,14,'ras']
+, [15,15,'vyr']
+, [16,16,'shan']
+, [17,17,'ros']
+, [18,18,'gar']
+, [19,19,'vas']
+, [20,20,'tine']
+, [21,21,'lor']
+, [22,22,'sin']
+, [23,23,'dras']
+, [24,24,'vyrn']
+, [25,25,'xis']
+, [26,26,'thor']
+, [27,27,'mir']
+, [28,28,'dal']
+, [29,29,'rik']
+, [30,30,'tas']
+, [31,31,'vin']
+, [32,32,'zorin']
+, [33,33,'lak']
+, [34,34,'rosin']
+, [35,35,'zan']
+, [36,36,'vik']
+, [37,37,'rian']
+, [38,38,'daros']
+, [39,39,'ther']
+, [40,40,'linar']
+, [41,41,'goth']
+, [42,42,'van']
+, [43,43,'ryn']
+, [44,44,'shar']
+, [45,45,'ron']
+, [46,46,'tas']
+, [47,47,'loris']
+, [48,48,'thas']
+, [49,49,'mire']
+, [50,50,'von']
+, [51,51,'dryn']
+, [52,52,'val']
+, [53,53,'rasin']
+, [54,54,'kore']
+, [55,55,'trin']
+, [56,56,'nor']
+, [57,57,'vokar']
+, [58,58,'zarin']
+, [59,59,'der']
+, [60,60,'shen']
+, [61,61,'vasin']
+, [62,62,'thorin']
+, [63,63,'rikar']
+, [64,64,'den']
+, [65,65,'voris']
+, [66,66,'shorin']
+, [67,67,'miron']
+, [68,68,'vorn']
+, [69,69,'drak']
+, [70,70,'rion']
+, [71,71,'gareth']
+, [72,72,'ven']
+, [73,73,'darion']
+, [74,74,'therin']
+, [75,75,'kath']
+, [76,76,'vyris']
+, [77,77,'loron']
+, [78,78,'ris']
+, [79,79,'dalin']
+, [80,80,'thren']
+, [81,81,'karis']
+, [82,82,'zaros']
+, [83,83,'venar']
+, [84,84,'garis']
+, [85,85,'rosar']
+, [86,86,'voryn']
+, [87,87,'miris']
+, [88,88,'lath']
+, [89,89,'darith']
+, [90,90,'shor']
+, [91,91,'thyr']
+, [92,92,'rikos']
+, [93,93,'zanar']
+, [94,94,'voth']
+, [95,95,'drarin']
+, [96,96,'sinor']
+, [97,97,'ronar']
+, [98,98,'morth']
+, [99,99,'vor']
+, [100,100,'rythin']
+, [101,101,'kiran']
+, [102,102,'velar']
+, [103,103,'gothis']
+, [104,104,'daros']
+, [105,105,'rithar']
+, [106,106,'vonis']
+, [107,107,'dyn']
+, [108,108,'varen']
+];
+
+aryHuman1 = [
+  [1,1,'Al']
+, [2,2,'Be']
+, [3,3,'Ca']
+, [4,4,'Da']
+, [5,5,'El']
+, [6,6,'Fa']
+, [7,7,'Ga']
+, [8,8,'Ha']
+, [9,9,'Il']
+, [10,10,'Ja']
+, [11,11,'Ka']
+, [12,12,'La']
+, [13,13,'Ma']
+, [14,14,'Na']
+, [15,15,'Ola']
+, [16,16,'Pa']
+, [17,17,'Qua']
+, [18,18,'Ra']
+, [19,19,'Sa']
+, [20,20,'Ta']
+, [21,21,'Ula']
+, [22,22,'Va']
+, [23,23,'Wa']
+, [24,24,'Xa']
+, [25,25,'Ya']
+, [26,26,'Za']
+, [27,27,'Ari']
+, [28,28,'Bri']
+, [29,29,'Cori']
+, [30,30,'Dari']
+, [31,31,'Elri']
+, [32,32,'Feri']
+, [33,33,'Gari']
+, [34,34,'Hali']
+, [35,35,'Ilan']
+, [36,36,'Jora']
+, [37,37,'Kira']
+, [38,38,'Lira']
+, [39,39,'Mira']
+, [40,40,'Nara']
+, [41,41,'Olin']
+, [42,42,'Pira']
+, [43,43,'Qira']
+, [44,44,'Rina']
+, [45,45,'Siri']
+, [46,46,'Tira']
+, [47,47,'Uria']
+, [48,48,'Vira']
+, [49,49,'Wira']
+, [50,50,'Xira']
+, [51,51,'Yara']
+, [52,52,'Zira']
+, [53,53,'Anu']
+, [54,54,'Bel']
+, [55,55,'Cya']
+, [56,56,'Dra']
+, [57,57,'Eli']
+, [58,58,'Fre']
+, [59,59,'Glo']
+, [60,60,'Hes']
+, [61,61,'Ivy']
+, [62,62,'Jon']
+, [63,63,'Kel']
+, [64,64,'Lya']
+, [65,65,'Myr']
+, [66,66,'Nex']
+, [67,67,'Omi']
+, [68,68,'Pha']
+, [69,69,'Qen']
+, [70,70,'Rya']
+, [71,71,'Sel']
+, [72,72,'Tan']
+, [73,73,'Ume']
+, [74,74,'Vey']
+, [75,75,'Wyn']
+, [76,76,'Xen']
+, [77,77,'Yra']
+, [78,78,'Zel']
+, [79,79,'Aven']
+, [80,80,'Bran']
+, [81,81,'Cira']
+, [82,82,'Dira']
+, [83,83,'Elar']
+, [84,84,'Fion']
+, [85,85,'Gwen']
+, [86,86,'Hara']
+, [87,87,'Iska']
+, [88,88,'Juna']
+, [89,89,'Kyl']
+, [90,90,'Lyra']
+, [92,92,'Mira']
+, [93,93,'Nysa']
+, [94,94,'Oryn']
+, [95,95,'Pey']
+, [96,96,'Quin']
+, [97,97,'Rina']
+, [98,98,'Sira']
+, [99,99,'Tala']
+, [100,100,'Una']
+, [101,101,'Vira']
+, [102,102,'Wynn']
+];
+
+aryHuman2 = [
+  [1,1,'an']
+, [2,2,'el']
+, [3,3,'ir']
+, [4,4,'on']
+, [5,5,'ar']
+, [6,6,'in']
+, [7,7,'en']
+, [8,8,'yn']
+, [9,9,'or']
+, [10,10,'as']
+, [11,11,'is']
+, [12,12,'us']
+, [13,13,'os']
+, [14,14,'ra']
+, [15,15,'ne']
+, [16,16,'ia']
+, [17,17,'ine']
+, [18,18,'ian']
+, [19,19,'ael']
+, [20,20,'ora']
+, [21,21,'ith']
+, [22,22,'ron']
+, [23,23,'wen']
+, [24,24,'lith']
+, [25,25,'rin']
+, [26,26,'ser']
+, [27,27,'lin']
+, [28,28,'dar']
+, [29,29,'val']
+, [30,30,'lyn']
+, [31,31,'tis']
+, [32,32,'ris']
+, [33,33,'sel']
+, [34,34,'mon']
+, [35,35,'dor']
+, [36,36,'mar']
+, [37,37,'tar']
+, [38,38,'kar']
+, [39,39,'nor']
+, [40,40,'ven']
+, [41,41,'zar']
+, [42,42,'len']
+, [43,43,'das']
+, [44,44,'los']
+, [45,45,'vian']
+, [46,46,'dan']
+, [47,47,'din']
+, [48,48,'lin']
+, [49,49,'hyn']
+, [50,50,'ryan']
+, [51,51,'anith']
+, [52,52,'onel']
+, [53,53,'thar']
+, [54,54,'vor']
+, [55,55,'kael']
+, [56,56,'zen']
+, [57,57,'tian']
+, [58,58,'ran']
+, [59,59,'kian']
+, [60,60,'myn']
+, [61,61,'lyn']
+, [62,62,'ver']
+, [63,63,'sian']
+, [64,64,'nen']
+, [65,65,'niel']
+, [66,66,'bryn']
+, [67,67,'lian']
+, [68,68,'wan']
+, [69,69,'jyn']
+, [70,70,'daras']
+, [71,71,'zil']
+, [72,72,'yen']
+, [73,73,'quill']
+, [74,74,'thyn']
+, [75,75,'cian']
+, [76,76,'ryn']
+, [77,77,'zal']
+, [78,78,'fey']
+, [79,79,'ranis']
+, [80,80,'sol']
+, [81,81,'wynne']
+, [82,82,'therin']
+, [83,83,'zar']
+, [84,84,'neth']
+, [85,85,'silas']
+];
+
+aryHuman3 = [
+[1,1,'Al']
+, [2,2,'Be']
+, [3,3,'Ca']
+, [4,4,'Da']
+, [5,5,'El']
+, [6,6,'Fa']
+, [7,7,'Ga']
+, [8,8,'Ha']
+, [9,9,'Il']
+, [10,10,'Ja']
+, [11,11,'Ka']
+, [12,12,'La']
+, [13,13,'Ma']
+, [14,14,'Na']
+, [15,15,'Ola']
+, [16,16,'Pa']
+, [17,17,'Qua']
+, [18,18,'Ra']
+, [19,19,'Sa']
+, [20,20,'Ta']
+, [21,21,'Ula']
+, [22,22,'Va']
+, [23,23,'Wa']
+, [24,24,'Xa']
+, [25,25,'Ya']
+, [26,26,'Za']
+, [27,27,'Ari']
+, [28,28,'Bri']
+, [29,29,'Cori']
+, [30,30,'Dari']
+, [31,31,'Elri']
+, [32,32,'Feri']
+, [33,33,'Gari']
+, [34,34,'Hali']
+, [35,35,'Ilan']
+, [36,36,'Jora']
+, [37,37,'Kira']
+, [38,38,'Lira']
+, [39,39,'Mira']
+, [40,40,'Nara']
+, [41,41,'Olin']
+, [42,42,'Pira']
+, [43,43,'Qira']
+, [44,44,'Rina']
+, [45,45,'Siri']
+, [46,46,'Tira']
+, [47,47,'Uria']
+, [48,48,'Vira']
+, [49,49,'Wira']
+, [50,50,'Xira']
+, [51,51,'Yara']
+, [52,52,'Zira']
+, [53,53,'Anu']
+, [54,54,'Bel']
+, [55,55,'Cya']
+, [56,56,'Dra']
+, [57,57,'Eli']
+, [58,58,'Fre']
+, [59,59,'Glo']
+, [60,60,'Hes']
+, [61,61,'Ivy']
+, [62,62,'Jon']
+, [63,63,'Kel']
+, [64,64,'Lya']
+, [65,65,'Myr']
+, [66,66,'Nex']
+, [67,67,'Omi']
+, [68,68,'Pha']
+, [69,69,'Qen']
+, [70,70,'Rya']
+, [71,71,'Sel']
+, [72,72,'Tan']
+, [73,73,'Ume']
+, [74,74,'Vey']
+, [75,75,'Wyn']
+, [76,76,'Xen']
+, [77,77,'Yra']
+, [78,78,'Zel']
+, [79,79,'Aven']
+, [80,80,'Bran']
+, [81,81,'Cira']
+, [82,82,'Dira']
+, [83,83,'Elar']
+, [84,84,'Fion']
+, [85,85,'Gwen']
+, [86,86,'Hara']
+, [87,87,'Iska']
+, [88,88,'Juna']
+, [89,89,'Kyl']
+, [90,90,'Lyra']
+, [91,91,'Mira']
+, [92,92,'Nysa']
+, [93,93,'Oryn']
+, [94,94,'Pey']
+, [95,95,'Quin']
+, [96,96,'Rina']
+, [97,97,'Sira']
+, [98,98,'Tala']
+, [99,99,'Una']
+, [100,100,'Vira']
+, [101,101,'Wynn']
+];
+aryHuman4 = [[,,'an']
+, [1,1,'el']
+, [2,2,'ir']
+, [3,3,'on']
+, [4,4,'ar']
+, [5,5,'in']
+, [6,6,'en']
+, [7,7,'yn']
+, [8,8,'or']
+, [9,9,'as']
+, [10,10,'is']
+, [11,11,'us']
+, [12,12,'os']
+, [13,13,'ra']
+, [14,14,'ne']
+, [15,15,'ia']
+, [16,16,'ine']
+, [17,17,'ian']
+, [18,18,'ael']
+, [19,19,'ora']
+, [20,20,'ith']
+, [21,21,'ron']
+, [22,22,'wen']
+, [23,23,'lith']
+, [24,24,'rin']
+, [25,25,'ser']
+, [26,26,'lin']
+, [27,27,'dar']
+, [28,28,'val']
+, [29,29,'lyn']
+, [30,30,'tis']
+, [31,31,'ris']
+, [32,32,'sel']
+, [33,33,'mon']
+, [34,34,'dor']
+, [35,35,'mar']
+, [36,36,'tar']
+, [37,37,'kar']
+, [38,38,'nor']
+, [39,39,'ven']
+, [40,40,'zar']
+, [41,41,'len']
+, [42,42,'das']
+, [43,43,'los']
+, [44,44,'vian']
+, [45,45,'dan']
+, [46,46,'din']
+, [47,47,'lin']
+, [48,48,'hyn']
+, [49,49,'ryan']
+, [50,50,'anith']
+, [51,51,'onel']
+, [52,52,'thar']
+, [53,53,'vor']
+, [54,54,'kael']
+, [55,55,'zen']
+, [56,56,'tian']
+, [57,57,'ran']
+, [58,58,'kian']
+, [59,59,'myn']
+, [60,60,'lyn']
+, [61,61,'ver']
+, [62,62,'sian']
+, [63,63,'nen']
+, [64,64,'niel']
+, [65,65,'bryn']
+, [66,66,'lian']
+, [67,67,'wan']
+, [68,68,'jyn']
+, [69,69,'daras']
+, [70,70,'zil']
+, [71,71,'yen']
+, [72,72,'quill']
+, [73,73,'thyn']
+, [74,74,'cian']
+, [75,75,'ryn']
+, [76,76,'zal']
+, [77,77,'fey']
+, [78,78,'ranis']
+, [79,79,'sol']
+, [80,80,'wynne']
+, [81,81,'therin']
+, [82,82,'zar']
+, [83,83,'neth']
+, [84,84,'silas']
+];
+
+aryHalfOrc1 = [
+[1,1,'Gro']
+,[2,2,'Thra']
+,[3,3,'Bok']
+,[4,4,'Zug']
+,[5,5,'Kra']
+,[6,6,'Ruk']
+,[7,7,'Dra']
+,[8,8,'Grom']
+,[9,9,'Tar']
+,[10,10,'Ulg']
+,[11,11,'Vor']
+,[12,12,'Mak']
+,[13,13,'Nok']
+,[14,14,'Vok']
+,[15,15,'Shra']
+,[16,16,'Bra']
+,[17,17,'Krug']
+,[18,18,'Hok']
+,[19,19,'Gak']
+,[20,20,'Zar']
+,[21,21,'Tor']
+,[22,22,'Xar']
+,[23,23,'Brax']
+,[24,24,'Krag']
+,[25,25,'Sok']
+,[26,26,'Bul']
+,[27,27,'Fro']
+,[28,28,'Dorg']
+,[29,29,'Ul']
+,[30,30,'Nar']
+,[31,31,'Grul']
+,[32,32,'Krag']
+,[33,33,'Mok']
+,[34,34,'Shog']
+,[35,35,'Vorag']
+,[36,36,'Dorn']
+,[37,37,'Krak']
+,[38,38,'Vrag']
+,[39,39,'Brol']
+,[40,40,'Zag']
+,[41,41,'Nurk']
+,[42,42,'Rok']
+,[43,43,'Vrag']
+,[44,44,'Thok']
+,[45,45,'Glok']
+,[46,46,'Dru']
+,[47,47,'Grat']
+,[48,48,'Var']
+,[49,49,'Ruk']
+,[50,50,'Gok']
+,[51,51,'Krazz']
+,[52,52,'Thorr']
+,[53,53,'Zarn']
+,[54,54,'Nok']
+,[55,55,'Braxx']
+,[56,56,'Vul']
+,[57,57,'Sharn']
+,[58,58,'Makk']
+,[59,59,'Groth']
+,[60,60,'Thrug']
+,[61,61,'Korn']
+,[62,62,'Bork']
+,[63,63,'Zul']
+,[64,64,'Nath']
+,[65,65,'Tarok']
+,[66,66,'Uth']
+,[67,67,'Ragh']
+,[68,68,'Zok']
+,[69,69,'Skar']
+,[70,70,'Broth']
+,[71,71,'Jurg']
+,[72,72,'Trak']
+,[73,73,'Nuk']
+,[74,74,'Xor']
+,[75,75,'Bald']
+,[76,76,'Kraz']
+,[77,77,'Thor']
+,[78,78,'Rok']
+,[79,79,'Norg']
+,[80,80,'Garn']
+,[81,81,'Hruk']
+,[82,82,'Varn']
+,[83,83,'Drog']
+,[84,84,'Murn']
+,[85,85,'Gorr']
+,[86,86,'Thrond']
+,[87,87,'Brok']
+,[88,88,'Tharn']
+,[89,89,'Krish']
+];
+
+aryHalfOrc2 = [
+[1,1,'ak']
+,[2,2,'ar']
+,[3,3,'an']
+,[4,4,'ik']
+,[5,5,'or']
+,[6,6,'in']
+,[7,7,'um']
+,[8,8,'at']
+,[9,9,'al']
+,[10,10,'ok']
+,[11,11,'ir']
+,[12,12,'ug']
+,[13,13,'ul']
+,[14,14,'yn']
+,[15,15,'as']
+,[16,16,'os']
+,[17,17,'ath']
+,[18,18,'ra']
+,[19,19,'th']
+,[20,20,'uk']
+,[21,21,'ur']
+,[22,22,'okh']
+,[23,23,'inor']
+,[24,24,'rak']
+,[25,25,'rak']
+,[26,26,'thak']
+,[27,27,'grim']
+,[28,28,'nar']
+,[29,29,'mar']
+,[30,30,'ron']
+,[31,31,'gor']
+,[32,32,'ven']
+,[33,33,'var']
+,[34,34,'rak']
+,[35,35,'nal']
+,[36,36,'dar']
+,[37,37,'gar']
+,[38,38,'sar']
+,[39,39,'thal']
+,[40,40,'rul']
+,[41,41,'kar']
+,[42,42,'zak']
+,[43,43,'thor']
+,[44,44,'vorn']
+,[45,45,'goth']
+,[46,46,'gath']
+,[47,47,'thul']
+,[48,48,'nath']
+,[49,49,'zhak']
+,[50,50,'marn']
+,[51,51,'kor']
+,[52,52,'ram']
+,[53,53,'rak']
+,[54,54,'thor']
+,[55,55,'zhar']
+,[56,56,'rak']
+,[57,57,'gul']
+,[58,58,'tar']
+,[59,59,'nar']
+,[60,60,'mir']
+,[61,61,'dorn']
+,[62,62,'kan']
+,[63,63,'grom']
+,[64,64,'sar']
+,[65,65,'gar']
+,[66,66,'vak']
+,[67,67,'nar']
+,[68,68,'thok']
+,[69,69,'vok']
+,[70,70,'nar']
+,[71,71,'gor']
+,[72,72,'gorn']
+,[73,73,'vorn']
+,[74,74,'dar']
+,[75,75,'tak']
+,[76,76,'gak']
+,[77,77,'ral']
+,[78,78,'rak']
+,[79,79,'nar']
+,[80,80,'tor']
+,[81,81,'rin']
+,[82,82,'noth']
+,[83,83,'kur']
+,[84,84,'rak']
+,[85,85,'drak']
+,[86,86,'zur']
+,[87,87,'rak']
+,[88,88,'gar']
+,[89,89,'nar']
+,[90,90,'kor']
+];
+
+aryHalfOrc3 = [
+[1,1,'Gro']
+,[2,2,'Thra']
+,[3,3,'Bok']
+,[4,4,'Zug']
+,[5,5,'Kra']
+,[6,6,'Ruk']
+,[7,7,'Dra']
+,[8,8,'Grom']
+,[9,9,'Tar']
+,[10,10,'Ulg']
+,[11,11,'Vor']
+,[12,12,'Mak']
+,[13,13,'Nok']
+,[14,14,'Vok']
+,[15,15,'Shra']
+,[16,16,'Bra']
+,[17,17,'Krug']
+,[18,18,'Hok']
+,[19,19,'Gak']
+,[20,20,'Zar']
+,[21,21,'Tor']
+,[22,22,'Xar']
+,[23,23,'Brax']
+,[24,24,'Krag']
+,[25,25,'Sok']
+,[26,26,'Bul']
+,[27,27,'Fro']
+,[28,28,'Dorg']
+,[29,29,'Ul']
+,[30,30,'Nar']
+,[31,31,'Grul']
+,[32,32,'Krag']
+,[33,33,'Mok']
+,[34,34,'Shog']
+,[35,35,'Vorag']
+,[36,36,'Dorn']
+,[37,37,'Krak']
+,[38,38,'Vrag']
+,[39,39,'Brol']
+,[40,40,'Zag']
+,[41,41,'Nurk']
+,[42,42,'Rok']
+,[43,43,'Vrag']
+,[44,44,'Thok']
+,[45,45,'Glok']
+,[46,46,'Dru']
+,[47,47,'Grat']
+,[48,48,'Var']
+,[49,49,'Ruk']
+,[50,50,'Gok']
+,[51,51,'Krazz']
+,[52,52,'Thorr']
+,[53,53,'Zarn']
+,[54,54,'Nok']
+,[55,55,'Braxx']
+,[56,56,'Vul']
+,[57,57,'Sharn']
+,[58,58,'Makk']
+,[59,59,'Groth']
+,[60,60,'Thrug']
+,[61,61,'Korn']
+,[62,62,'Bork']
+,[63,63,'Zul']
+,[64,64,'Nath']
+,[65,65,'Tarok']
+,[66,66,'Uth']
+,[67,67,'Ragh']
+,[68,68,'Zok']
+,[69,69,'Skar']
+,[70,70,'Broth']
+,[71,71,'Jurg']
+,[72,72,'Trak']
+,[73,73,'Nuk']
+,[74,74,'Xor']
+,[75,75,'Bald']
+,[76,76,'Kraz']
+,[77,77,'Thor']
+,[78,78,'Rok']
+,[79,79,'Norg']
+,[80,80,'Garn']
+,[81,81,'Hruk']
+,[82,82,'Varn']
+,[83,83,'Drog']
+,[84,84,'Murn']
+,[85,85,'Gorr']
+,[86,86,'Thrond']
+,[87,87,'Brok']
+,[88,88,'Tharn']
+,[89,89,'Krish']
+];
+
+aryHalfOrc4 = [
+[1,1,'ak']
+,[2,2,'ar']
+,[3,3,'an']
+,[4,4,'ik']
+,[5,5,'or']
+,[6,6,'in']
+,[7,7,'um']
+,[8,8,'at']
+,[9,9,'al']
+,[10,10,'ok']
+,[11,11,'ir']
+,[12,12,'ug']
+,[13,13,'ul']
+,[14,14,'yn']
+,[15,15,'as']
+,[16,16,'os']
+,[17,17,'ath']
+,[18,18,'ra']
+,[19,19,'th']
+,[20,20,'uk']
+,[21,21,'ur']
+,[22,22,'okh']
+,[23,23,'inor']
+,[24,24,'rak']
+,[25,25,'rak']
+,[26,26,'thak']
+,[27,27,'grim']
+,[28,28,'nar']
+,[29,29,'mar']
+,[30,30,'ron']
+,[31,31,'gor']
+,[32,32,'ven']
+,[33,33,'var']
+,[34,34,'rak']
+,[35,35,'nal']
+,[36,36,'dar']
+,[37,37,'gar']
+,[38,38,'sar']
+,[39,39,'thal']
+,[40,40,'rul']
+,[41,41,'kar']
+,[42,42,'zak']
+,[43,43,'thor']
+,[44,44,'vorn']
+,[45,45,'goth']
+,[46,46,'gath']
+,[47,47,'thul']
+,[48,48,'nath']
+,[49,49,'zhak']
+,[50,50,'marn']
+,[51,51,'kor']
+,[52,52,'ram']
+,[53,53,'rak']
+,[54,54,'thor']
+,[55,55,'zhar']
+,[56,56,'rak']
+,[57,57,'gul']
+,[58,58,'tar']
+,[59,59,'nar']
+,[60,60,'mir']
+,[61,61,'dorn']
+,[62,62,'kan']
+,[63,63,'grom']
+,[64,64,'sar']
+,[65,65,'gar']
+,[66,66,'vak']
+,[67,67,'nar']
+,[68,68,'thok']
+,[69,69,'vok']
+,[70,70,'nar']
+,[71,71,'gor']
+,[72,72,'gorn']
+,[73,73,'vorn']
+,[74,74,'dar']
+,[75,75,'tak']
+,[76,76,'gak']
+,[77,77,'ral']
+,[78,78,'rak']
+,[79,79,'nar']
+,[80,80,'tor']
+,[81,81,'rin']
+,[82,82,'noth']
+,[83,83,'kur']
+,[84,84,'rak']
+,[85,85,'drak']
+,[86,86,'zur']
+,[87,87,'rak']
+,[88,88,'gar']
+,[89,89,'nar']
+,[90,90,'kor']
+];
+
+aryAasimar1 = [
+[1,1,'Ael']
+,[2,2,'Ser']
+,[3,3,'Val']
+,[4,4,'Lyra']
+,[5,5,'Cael']
+,[6,6,'El']
+,[7,7,'Sael']
+,[8,8,'Ira']
+,[9,9,'Kael']
+,[10,10,'Thal']
+,[11,11,'Myra']
+,[12,12,'Jas']
+,[13,13,'Zar']
+,[14,14,'Tal']
+,[15,15,'Fay']
+,[16,16,'Ari']
+,[17,17,'Rin']
+,[18,18,'Dru']
+,[19,19,'Olin']
+,[20,20,'Gal']
+,[21,21,'Hes']
+,[22,22,'Vyn']
+,[23,23,'Kira']
+,[24,24,'Lira']
+,[25,25,'Nia']
+,[26,26,'Rei']
+,[27,27,'Sira']
+,[28,28,'Anu']
+,[29,29,'Bri']
+,[30,30,'Cora']
+,[31,31,'Eli']
+,[32,32,'Fen']
+,[33,33,'Gwen']
+,[34,34,'Hara']
+,[35,35,'Ith']
+,[36,36,'Juna']
+,[37,37,'Kira']
+,[38,38,'Lyn']
+,[39,39,'Mira']
+,[40,40,'Nora']
+,[41,41,'Orin']
+,[42,42,'Phae']
+,[43,43,'Qira']
+,[44,44,'Rhea']
+,[45,45,'Seth']
+,[46,46,'Tali']
+,[47,47,'Uma']
+,[48,48,'Vera']
+,[49,49,'Wyn']
+,[50,50,'Xara']
+,[51,51,'Yara']
+,[52,52,'Zara']
+,[53,53,'Elar']
+,[54,54,'Fion']
+,[55,55,'Gwen']
+,[56,56,'Hara']
+,[57,57,'Iska']
+,[58,58,'Juna']
+,[59,59,'Kyl']
+,[60,60,'Lira']
+,[61,61,'Mira']
+,[62,62,'Nysa']
+,[63,63,'Oryn']
+,[64,64,'Pey']
+,[65,65,'Quin']
+,[66,66,'Rina']
+,[67,67,'Sira']
+,[68,68,'Tala']
+,[69,69,'Una']
+,[70,70,'Vira']
+,[71,71,'Wynn']
+];
+
+aryAasimar2 = [
+[1,1,'el']
+,[2,2,'in']
+,[3,3,'ar']
+,[4,4,'is']
+,[5,5,'yn']
+,[6,6,'ael']
+,[7,7,'ith']
+,[8,8,'ria']
+,[9,9,'ra']
+,[10,10,'on']
+,[11,11,'as']
+,[12,12,'en']
+,[13,13,'iel']
+,[14,14,'or']
+,[15,15,'al']
+,[16,16,'ith']
+,[17,17,'an']
+,[18,18,'us']
+,[19,19,'es']
+,[20,20,'ia']
+,[21,21,'lin']
+,[22,22,'nor']
+,[23,23,'thal']
+,[24,24,'ria']
+,[25,25,'wen']
+,[26,26,'ara']
+,[27,27,'iel']
+,[28,28,'ora']
+,[29,29,'ven']
+,[30,30,'har']
+,[31,31,'ia']
+,[32,32,'il']
+,[33,33,'en']
+,[34,34,'on']
+,[35,35,'iel']
+,[36,36,'rin']
+,[37,37,'ara']
+,[38,38,'thia']
+,[39,39,'siel']
+,[40,40,'wen']
+,[41,41,'lith']
+,[42,42,'ryn']
+,[43,43,'ryn']
+,[44,44,'lis']
+,[45,45,'lan']
+,[46,46,'or']
+,[47,47,'ari']
+,[48,48,'val']
+,[49,49,'wyn']
+,[50,50,'thor']
+,[51,51,'nes']
+,[52,52,'mor']
+,[53,53,'nar']
+,[54,54,'ser']
+,[55,55,'tar']
+,[56,56,'wen']
+,[57,57,'rin']
+,[58,58,'vel']
+,[59,59,'zar']
+,[60,60,'ial']
+,[61,61,'ris']
+,[62,62,'nar']
+,[63,63,'tan']
+,[64,64,'in']
+,[65,65,'en']
+,[66,66,'tor']
+,[67,67,'wen']
+,[68,68,'rel']
+,[69,69,'nar']
+,[70,70,'iar']
+,[71,71,'niel']
+,[72,72,'siel']
+,[73,73,'rin']
+,[74,74,'el']
+,[75,75,'yn']
+];
+
+aryAasimar3 = [
+[1,1,'th']
+,[2,2,'cor']
+,[3,3,'dan']
+,[4,4,'veil']
+,[5,5,'en']
+,[6,6,'ron']
+,[7,7,'sar']
+,[8,8,'mir']
+,[9,9,'len']
+,[10,10,'wen']
+,[11,11,'hal']
+,[12,12,'ner']
+,[13,13,'tin']
+,[14,14,'san']
+,[15,15,'vin']
+,[16,16,'nar']
+,[17,17,'raen']
+,[18,18,'val']
+,[19,19,'dai']
+,[20,20,'lin']
+,[21,21,'ion']
+,[22,22,'los']
+,[23,23,'nor']
+,[24,24,'wan']
+,[25,25,'ryn']
+,[26,26,'mar']
+,[27,27,'ren']
+,[28,28,'sol']
+,[29,29,'tar']
+,[30,30,'wen']
+,[31,31,'ril']
+,[32,32,'kor']
+,[33,33,'wen']
+,[34,34,'mar']
+,[35,35,'fel']
+,[36,36,'tor']
+,[37,37,'mir']
+,[38,38,'lan']
+,[39,39,'tor']
+,[40,40,'yen']
+,[41,41,'sil']
+,[42,42,'gel']
+,[43,43,'rin']
+,[44,44,'tan']
+,[45,45,'vel']
+,[46,46,'rin']
+,[47,47,'kan']
+,[48,48,'lin']
+,[49,49,'nor']
+,[50,50,'sel']
+,[51,51,'val']
+,[52,52,'kor']
+,[53,53,'gar']
+,[54,54,'han']
+,[55,55,'fey']
+,[56,56,'lar']
+,[57,57,'sar']
+,[58,58,'her']
+,[59,59,'ven']
+,[60,60,'ral']
+,[61,61,'nor']
+,[62,62,'ryn']
+,[63,63,'tar']
+,[64,64,'nar']
+,[65,65,'ven']
+,[66,66,'rin']
+,[67,67,'kor']
+,[68,68,'val']
+,[69,69,'hen']
+,[70,70,'lyn']
+,[71,71,'dor']
+,[72,72,'hel']
+,[73,73,'var']
+];
+
+aryCatfolk1 = [
+[1,1,'Nya']
+,[2,2,'Mew']
+,[3,3,'Kai']
+,[4,4,'Tia']
+,[5,5,'Luna']
+,[6,6,'Feli']
+,[7,7,'Kira']
+,[8,8,'Jin']
+,[9,9,'Zara']
+,[10,10,'Tora']
+,[11,11,'Suki']
+,[12,12,'Rin']
+,[13,13,'Leo']
+,[14,14,'Paw']
+,[15,15,'Mia']
+,[16,16,'Nala']
+,[17,17,'Zuri']
+,[18,18,'Lia']
+,[19,19,'Yara']
+,[20,20,'Cali']
+,[21,21,'Kita']
+,[22,22,'Zia']
+,[23,23,'Sora']
+,[24,24,'Mika']
+,[25,25,'Rhea']
+,[26,26,'Jaya']
+,[27,27,'Kali']
+,[28,28,'Lira']
+,[29,29,'Nori']
+,[30,30,'Vala']
+,[31,31,'Fira']
+,[32,32,'Zara']
+,[33,33,'Tali']
+,[34,34,'Yuki']
+,[35,35,'Ari']
+,[36,36,'Kiri']
+,[37,37,'Mira']
+,[38,38,'Neko']
+,[39,39,'Siri']
+,[40,40,'Tami']
+,[41,41,'Yumi']
+,[42,42,'Kiri']
+,[43,43,'Miri']
+,[44,44,'Fay']
+,[45,45,'Dai']
+,[46,46,'Tika']
+,[47,47,'Lana']
+,[48,48,'Milu']
+,[49,49,'Vina']
+,[50,50,'Kaya']
+,[51,51,'Tiki']
+,[52,52,'Lika']
+,[53,53,'Zita']
+,[54,54,'Zuki']
+,[55,55,'Tana']
+,[56,56,'Milo']
+,[57,57,'Sia']
+,[58,58,'Cleo']
+,[59,59,'Nira']
+,[60,60,'Zena']
+,[61,61,'Mali']
+,[62,62,'Neko']
+,[63,63,'Dara']
+,[64,64,'Luna']
+,[65,65,'Toni']
+,[66,66,'Mira']
+,[67,67,'Naya']
+,[68,68,'Hana']
+,[69,69,'Taya']
+,[70,70,'Mira']
+,[71,71,'Kiri']
+,[72,72,'Fina']
+,[73,73,'Riya']
+,[74,74,'Nai']
+,[75,75,'Tina']
+];
+
+aryCatfolk2 = [
+[1,1,'na']
+,[2,2,'ka']
+,[3,3,'ra']
+,[4,4,'mi']
+,[5,5,'ya']
+,[6,6,'li']
+,[7,7,'ra']
+,[8,8,'ta']
+,[9,9,'ri']
+,[10,10,'ma']
+,[11,11,'sa']
+,[12,12,'ka']
+,[13,13,'na']
+,[14,14,'ka']
+,[15,15,'sha']
+,[16,16,'li']
+,[17,17,'ra']
+,[18,18,'mi']
+,[19,19,'na']
+,[20,20,'ra']
+,[21,21,'sa']
+,[22,22,'ka']
+,[23,23,'ti']
+,[24,24,'ri']
+,[25,25,'li']
+,[26,26,'ta']
+,[27,27,'ri']
+,[28,28,'na']
+,[29,29,'ya']
+,[30,30,'mi']
+,[31,31,'ra']
+,[32,32,'ja']
+,[33,33,'na']
+,[34,34,'sha']
+,[35,35,'ti']
+,[36,36,'na']
+,[37,37,'ka']
+,[38,38,'la']
+,[39,39,'ra']
+,[40,40,'ma']
+,[41,41,'ka']
+,[42,42,'na']
+,[43,43,'la']
+,[44,44,'sa']
+,[45,45,'ta']
+,[46,46,'ni']
+,[47,47,'ka']
+,[48,48,'ra']
+,[49,49,'na']
+,[50,50,'ka']
+,[51,51,'sa']
+,[52,52,'mi']
+,[53,53,'na']
+,[54,54,'ra']
+,[55,55,'ma']
+,[56,56,'ki']
+,[57,57,'ta']
+,[58,58,'na']
+,[59,59,'ri']
+,[60,60,'ka']
+,[61,61,'mi']
+,[62,62,'ja']
+,[63,63,'ka']
+,[64,64,'sa']
+,[65,65,'ya']
+,[66,66,'ti']
+,[67,67,'ra']
+,[68,68,'ka']
+,[69,69,'na']
+,[70,70,'ma']
+,[71,71,'ri']
+,[72,72,'ya']
+,[73,73,'ni']
+,[74,74,'ta']
+,[75,75,'li']
+,[76,76,'ja']
+,[77,77,'ra']
+,[78,78,'la']
+,[79,79,'ka']
+,[80,80,'ya']
+,[81,81,'ma']
+,[82,82,'sa']
+,[83,83,'ta']
+,[84,84,'na']
+,[85,85,'li']
+,[86,86,'ka']
+,[87,87,'mi']
+,[88,88,'ra']
+,[89,89,'ta']
+,[90,90,'na']
+,[91,91,'sa']
+];
+
+aryIfrit1 = [
+[1,1,'Zar']
+,[2,2,'Iri']
+,[3,3,'Kha']
+,[4,4,'Sari']
+,[5,5,'Rahi']
+,[6,6,'Fira']
+,[7,7,'Nari']
+,[8,8,'Afi']
+,[9,9,'Lumi']
+,[10,10,'Jahi']
+,[11,11,'Tari']
+,[12,12,'Vira']
+,[13,13,'Nuri']
+,[14,14,'Sari']
+,[15,15,'Qari']
+,[16,16,'Zahi']
+,[17,17,'Dari']
+,[18,18,'Hara']
+,[19,19,'Vayi']
+,[20,20,'Kira']
+,[21,21,'Pahi']
+,[22,22,'Sula']
+,[23,23,'Tala']
+,[24,24,'Vera']
+,[25,25,'Razi']
+,[26,26,'Mira']
+,[27,27,'Hani']
+,[28,28,'Yara']
+,[29,29,'Fari']
+,[30,30,'Kani']
+,[31,31,'Rina']
+,[32,32,'Zari']
+,[33,33,'Kira']
+,[34,34,'Yani']
+,[35,35,'Miri']
+,[36,36,'Zuri']
+,[37,37,'Dali']
+,[38,38,'Rami']
+,[39,39,'Firi']
+,[40,40,'Hira']
+,[41,41,'Jani']
+,[42,42,'Nika']
+,[43,43,'Raza']
+,[44,44,'Vira']
+,[45,45,'Yani']
+,[46,46,'Zira']
+,[47,47,'Hala']
+,[48,48,'Kira']
+,[49,49,'Tiri']
+,[50,50,'Firi']
+,[51,51,'Zahi']
+,[52,52,'Rina']
+,[53,53,'Sahi']
+,[54,54,'Tari']
+,[55,55,'Dina']
+,[56,56,'Lira']
+,[57,57,'Jari']
+,[58,58,'Fina']
+,[59,59,'Kira']
+,[60,60,'Vaya']
+,[61,61,'Nira']
+,[62,62,'Tami']
+,[63,63,'Zari']
+,[64,64,'Lumi']
+,[65,65,'Mahi']
+,[66,66,'Tana']
+,[67,67,'Zari']
+,[68,68,'Jala']
+,[69,69,'Dahi']
+,[70,70,'Nali']
+];
+
+aryIfrit2 = [
+[1,1,'ra']
+,[2,2,'na']
+,[3,3,'fi']
+,[4,4,'ka']
+,[5,5,'ri']
+,[6,6,'da']
+,[7,7,'hi']
+,[8,8,'la']
+,[9,9,'sa']
+,[10,10,'mi']
+,[11,11,'ra']
+,[12,12,'va']
+,[13,13,'ni']
+,[14,14,'ra']
+,[15,15,'mi']
+,[16,16,'ka']
+,[17,17,'ni']
+,[18,18,'fa']
+,[19,19,'la']
+,[20,20,'ra']
+,[21,21,'ni']
+,[22,22,'ja']
+,[23,23,'zi']
+,[24,24,'ri']
+,[25,25,'ja']
+,[26,26,'ma']
+,[27,27,'ra']
+,[28,28,'fi']
+,[29,29,'sa']
+,[30,30,'ka']
+,[31,31,'va']
+,[32,32,'na']
+,[33,33,'ra']
+,[34,34,'di']
+,[35,35,'zi']
+,[36,36,'va']
+,[37,37,'sa']
+,[38,38,'ni']
+,[39,39,'ka']
+,[40,40,'ti']
+,[41,41,'ra']
+,[42,42,'mi']
+,[43,43,'na']
+,[44,44,'ri']
+,[45,45,'ka']
+,[46,46,'va']
+,[47,47,'li']
+,[48,48,'si']
+,[49,49,'ra']
+,[50,50,'ni']
+,[51,51,'ha']
+,[52,52,'zi']
+,[53,53,'ya']
+,[54,54,'ma']
+,[55,55,'ra']
+,[56,56,'na']
+,[57,57,'ja']
+,[58,58,'ti']
+,[59,59,'ri']
+,[60,60,'da']
+,[61,61,'va']
+,[62,62,'hi']
+,[63,63,'ki']
+,[64,64,'na']
+,[65,65,'ta']
+,[66,66,'ra']
+,[67,67,'li']
+,[68,68,'na']
+,[69,69,'ra']
+,[70,70,'da']
+,[71,71,'ni']
+,[72,72,'za']
+,[73,73,'ra']
+,[74,74,'ji']
+,[75,75,'ni']
+,[76,76,'va']
+,[77,77,'ra']
+,[78,78,'ka']
+,[79,79,'ya']
+,[80,80,'la']
+,[81,81,'mi']
+];
+
+aryOread1 = [
+[1,1,'Ter']
+,[2,2,'Gaia']
+,[3,3,'Rok']
+,[4,4,'Luna']
+,[5,5,'Dru']
+,[6,6,'Kora']
+,[7,7,'Gran']
+,[8,8,'Mira']
+,[9,9,'Sedi']
+,[10,10,'Rani']
+,[11,11,'Fira']
+,[12,12,'Thal']
+,[13,13,'Iva']
+,[14,14,'Jade']
+,[15,15,'Bri']
+,[16,16,'Nora']
+,[17,17,'Sylva']
+,[18,18,'Cera']
+,[19,19,'Tara']
+,[20,20,'Lira']
+,[21,21,'Oka']
+,[22,22,'Zara']
+,[23,23,'Eira']
+,[24,24,'Yara']
+,[25,25,'Dani']
+,[26,26,'Vera']
+,[27,27,'Rela']
+,[28,28,'Sari']
+,[29,29,'Kira']
+,[30,30,'Miri']
+,[31,31,'Hara']
+,[32,32,'Vana']
+,[33,33,'Rina']
+,[34,34,'Nala']
+,[35,35,'Zeni']
+,[36,36,'Gali']
+,[37,37,'Dina']
+,[38,38,'Lana']
+,[39,39,'Cali']
+,[40,40,'Terra']
+,[41,41,'Miri']
+,[42,42,'Kali']
+,[43,43,'Gara']
+,[44,44,'Reni']
+,[45,45,'Hiri']
+,[46,46,'Dara']
+,[47,47,'Zina']
+,[48,48,'Lumi']
+,[49,49,'Nira']
+,[50,50,'Tila']
+,[51,51,'Fina']
+,[52,52,'Zara']
+,[53,53,'Rena']
+,[54,54,'Mala']
+,[55,55,'Tani']
+,[56,56,'Liri']
+,[57,57,'Raya']
+,[58,58,'Kiri']
+,[59,59,'Sena']
+,[60,60,'Nari']
+,[61,61,'Lira']
+,[62,62,'Mora']
+,[63,63,'Dali']
+,[64,64,'Gina']
+,[65,65,'Rali']
+,[66,66,'Zira']
+];
+
+aryOread2 = [
+[1,1,'ra']
+,[2,2,'na']
+,[3,3,'th']
+,[4,4,'ka']
+,[5,5,'ri']
+,[6,6,'da']
+,[7,7,'ni']
+,[8,8,'la']
+,[9,9,'sa']
+,[10,10,'mi']
+,[11,11,'ga']
+,[12,12,'ra']
+,[13,13,'da']
+,[14,14,'ka']
+,[15,15,'ta']
+,[16,16,'na']
+,[17,17,'ma']
+,[18,18,'va']
+,[19,19,'li']
+,[20,20,'si']
+,[21,21,'ra']
+,[22,22,'ni']
+,[23,23,'la']
+,[24,24,'ra']
+,[25,25,'ka']
+,[26,26,'va']
+,[27,27,'ga']
+,[28,28,'na']
+,[29,29,'ra']
+,[30,30,'fi']
+,[31,31,'sa']
+,[32,32,'ka']
+,[33,33,'li']
+,[34,34,'na']
+,[35,35,'ri']
+,[36,36,'mi']
+,[37,37,'ti']
+,[38,38,'na']
+,[39,39,'ki']
+,[40,40,'ri']
+,[41,41,'la']
+,[42,42,'ni']
+,[43,43,'va']
+,[44,44,'ma']
+,[45,45,'ka']
+,[46,46,'ta']
+,[47,47,'ra']
+,[48,48,'hi']
+,[49,49,'zi']
+,[50,50,'la']
+,[51,51,'ri']
+,[52,52,'na']
+,[53,53,'mi']
+,[54,54,'ja']
+,[55,55,'ka']
+,[56,56,'ti']
+,[57,57,'ra']
+,[58,58,'va']
+,[59,59,'na']
+,[60,60,'ha']
+,[61,61,'li']
+,[62,62,'ra']
+,[63,63,'ni']
+,[64,64,'zi']
+,[65,65,'ga']
+,[66,66,'ra']
+,[67,67,'ki']
+,[68,68,'la']
+,[69,69,'ni']
+,[70,70,'ra']
+,[71,71,'ta']
+,[72,72,'ja']
+,[73,73,'ma']
+,[74,74,'ka']
+,[75,75,'li']
+,[76,76,'ti']
+,[77,77,'ra']
+];
+
+arySylph1 = [
+[1,1,'Ael']
+,[2,2,'Zeph']
+,[3,3,'Luna']
+,[4,4,'Kira']
+,[5,5,'Ryn']
+,[6,6,'Fay']
+,[7,7,'Nia']
+,[8,8,'Sera']
+,[9,9,'Vaya']
+,[10,10,'Gale']
+,[11,11,'Tara']
+,[12,12,'Sola']
+,[13,13,'Cira']
+,[14,14,'Ira']
+,[15,15,'Elin']
+,[16,16,'Fira']
+,[17,17,'Aira']
+,[18,18,'Mira']
+,[19,19,'Juna']
+,[20,20,'Tiri']
+,[21,21,'Zara']
+,[22,22,'Kiri']
+,[23,23,'Nora']
+,[24,24,'Liri']
+,[25,25,'Vela']
+,[26,26,'Dara']
+,[27,27,'Kira']
+,[28,28,'Ayla']
+,[29,29,'Hana']
+,[30,30,'Niri']
+,[31,31,'Fina']
+,[32,32,'Lyra']
+,[33,33,'Tali']
+,[34,34,'Elyra']
+,[35,35,'Wyn']
+,[36,36,'Naya']
+,[37,37,'Zara']
+,[38,38,'Vira']
+,[39,39,'Asha']
+,[40,40,'Rhea']
+,[41,41,'Kira']
+,[42,42,'Sina']
+,[43,43,'Yara']
+,[44,44,'Vanya']
+,[45,45,'Avi']
+,[46,46,'Fira']
+,[47,47,'Lina']
+,[48,48,'Ivy']
+,[49,49,'Zephra']
+,[50,50,'Tiri']
+,[51,51,'Mira']
+,[52,52,'Sira']
+,[53,53,'Niri']
+,[54,54,'Gwyn']
+,[55,55,'Rina']
+,[56,56,'Luna']
+,[57,57,'Faya']
+,[58,58,'Demi']
+,[59,59,'Zira']
+,[60,60,'Yuna']
+,[61,61,'Kyna']
+,[62,62,'Rena']
+,[63,63,'Zyra']
+,[64,64,'Tessa']
+,[65,65,'Hira']
+,[66,66,'Vela']
+,[67,67,'Ari']
+,[68,68,'Mira']
+,[69,69,'Ciri']
+];
+
+arySylph2 = [
+[1,1,'ra']
+,[2,2,'na']
+,[3,3,'ly']
+,[4,4,'ka']
+,[5,5,'ri']
+,[6,6,'za']
+,[7,7,'mi']
+,[8,8,'va']
+,[9,9,'ti']
+,[10,10,'la']
+,[11,11,'sa']
+,[12,12,'ni']
+,[13,13,'ra']
+,[14,14,'ki']
+,[15,15,'na']
+,[16,16,'va']
+,[17,17,'ta']
+,[18,18,'ra']
+,[19,19,'li']
+,[20,20,'za']
+,[21,21,'mi']
+,[22,22,'ri']
+,[23,23,'ta']
+,[24,24,'hi']
+,[25,25,'li']
+,[26,26,'ri']
+,[27,27,'za']
+,[28,28,'ni']
+,[29,29,'va']
+,[30,30,'mi']
+,[31,31,'ra']
+,[32,32,'ki']
+,[33,33,'na']
+,[34,34,'ta']
+,[35,35,'ri']
+,[36,36,'za']
+,[37,37,'na']
+,[38,38,'mi']
+,[39,39,'va']
+,[40,40,'la']
+,[41,41,'ni']
+,[42,42,'ra']
+,[43,43,'ki']
+,[44,44,'si']
+,[45,45,'na']
+,[46,46,'ti']
+,[47,47,'ra']
+,[48,48,'na']
+,[49,49,'ka']
+,[50,50,'li']
+,[51,51,'ra']
+,[52,52,'na']
+,[53,53,'ha']
+,[54,54,'ta']
+,[55,55,'li']
+,[56,56,'mi']
+,[57,57,'ji']
+,[58,58,'ki']
+,[59,59,'sa']
+,[60,60,'la']
+,[61,61,'ra']
+,[62,62,'na']
+,[63,63,'zi']
+,[64,64,'ha']
+,[65,65,'ki']
+,[66,66,'ya']
+,[67,67,'ni']
+,[68,68,'mi']
+,[69,69,'ra']
+,[70,70,'ti']
+,[71,71,'va']
+,[72,72,'la']
+,[73,73,'si']
+,[74,74,'mi']
+,[75,75,'ra']
+,[76,76,'ta']
+];
+
+aryUndine1 = [
+ [ 1, 1,'Ayla'],[ 2, 2,'Aqua'],[ 3, 3,'Asha'],[ 4, 4,'Cala'],[ 5, 5,'Ciri'],[ 6, 6,'Dari'],[ 7, 7,'Darya'],[ 8, 8,'Elena']
+,[ 9, 9,'Elia'],[10,10,'Fara'],[11,11,'Faya'],[12,12,'Fina'],[13,13,'Fina'],[14,14,'Hala'],[15,15,'Hana'],[16,16,'Hara']
+,[17,17,'Iri'],[18,18,'Juna'],[19,19,'Kaia'],[20,20,'Kali'],[21,21,'Kina'],[22,22,'Kira'],[23,23,'Lina'],[24,25,'Lira']
+,[26,26,'Lumi'],[27,28,'Luna'],[29,29,'Lyra'],[30,30,'Mina'],[31,33,'Mira'],[34,34,'Miri'],[35,35,'Nai'],[36,37,'Naiya']
+,[38,38,'Nina'],[39,39,'Nari'],[40,40,'Nila'],[41,41,'Nira'],[42,42,'Nysa'],[43,43,'Ocea'],[44,44,'Oni'],[45,45,'Rhea']
+,[46,48,'Rina'],[49,49,'Riya'],[50,50,'Sia'],[51,51,'Sina'],[52,52,'Sira'],[53,53,'Sola'],[54,54,'Tara'],[55,55,'Thal']
+,[56,56,'Tali'],[57,57,'Tani'],[58,58,'Vela'],[59,59,'Vira'],[60,60,'Wava'],[61,61,'Wyn'],[62,62,'Yara'],[63,63,'Yuna']
+,[64,64,'Zara'],[65,65,'Zina'],[66,66,'Zyra']
+];
+
+aryUndine2 = [
+   [ 1, 1,  'a'],[ 2, 2, 'ha'],[ 3, 4, 'ja'],[ 4, 8, 'ka'],[ 9,15, 'la'],[16,17, 'ma'],[18,25, 'na'],[26,37, 'ra']
+  ,[38,39, 'sa'],[40,42, 'ta'],[43,45, 'ya'],[46,51, 'va'],[52,52, 'za'],[53,54, 'ki'],[55,59, 'li'],[60,64, 'mi']
+  ,[65,70, 'ni'],[71,71, 'ri'],[72,72, 'si'],[73,76, 'ti'],[77,77, 'ri'],[78,78, 'zi'],[79,79,'ria']
+];
+
+function getRandom(die) { return Math.floor(Math.random() * die) + 1; }
+function getAlignment() { return getRandom(100); }
+function getGender() { return getRandom(100); }
+function getRace() { return getRandom(100); }
+function getClass() {
+  let val = getRandom(100);
+  let aryVal = [];
+  let maxVal = 1;
+
+  for (var i = 1; i <= maxVal; i++) {
+    if (val > 90 && val < 100) { val = getRandom(100) + 100; }
+    if ((val - 100) == 100 || val == 100) { 
+      val = getRandom(val - 1);
+      if (maxVal == 1) { maxVal++; }
+      maxVal++;
+    } else {
+      if (val <=100) {clsType = "common"; } else { clsType = "classed"; }
+      aryVal.push([val, getLevel(clsType)]);
+    }
+    if (i < maxVal) {
+      if (val >= 90 && val < 100) {
+        val = getRandom(100) + 100;
+      } else {
+        val = getRandom(100);
+      }
+    }
+  }
+
+  aryVal = aryVal.sort(function(a, b) { return a - b; });
+  return aryVal
+}
+function mergeDuplicateClasses(array) {
+    const result = {};
+
+    array.forEach(([name, value]) => {
+        if (result[getArrayId(aryClass,name)]) {
+            result[getArrayId(aryClass,name)] += value;
+        } else {
+            result[getArrayId(aryClass,name)] = value;
+        }
+    });
+
+    return Object.entries(result).map(([name, value]) => [name, value]);
+}
+function getLevel(clsType) {
+  let mod = 1;
+  if (clsType == "common") { mod = 0.75; }
+  return getRandom(Math.floor(100 * mod));
+}
+function setData() {
+  const gndrVal = getGender();
+  const raceVal = getRace();
+  let   clsVals = getClass();
+  let   algnmnt = (aryAlignment[getArrayId(aryAlignment,getRandom(100))][3].charAt(0)
+                + aryAlignment[getArrayId(aryAlignment,getRandom(100))][2].charAt(0))
+                .toUpperCase();
+  printCharacter(gndrVal, raceVal, clsVals, algnmnt);
+}
+function printCharacter(gndrVal, raceVal, clsVals, algnmnt) {
+  let gndrTxt = aryGender[getArrayId(aryGender,gndrVal)][2];
+  let gndrId  = getArrayId(aryGender,gndrVal);
+  let raceTxt = aryRace[getArrayId(aryRace,raceVal)][2];
+  let charName = getName(raceTxt, gndrId); 
+  if (algnmnt == "NN") { algnmnt = "N"; }
+  
+  let msg = "";
+  msg += algnmnt.toUpperCase() + " " + gndrTxt.toLowerCase() + " " + raceTxt.toLowerCase() + " ";
+  
+  let clsMsg = "";
+//  clsVals = mergeDuplicateClasses(clsVals);
+  /*
+  Need to check for duplicate Classes and increase the Level 
+  by the previous amount so that it is one Class.
+  Ex,
+    female dwarf commoner 1 / commoner 3
+    female dwarf commoner 4
+  */
+  for (var i = 0; i < clsVals.length; i++) {
+    if (clsMsg != "") { clsMsg += " / "; }
+    clsMsg += aryClass[getArrayId(aryClass,clsVals[i][0])][2] + " " + aryLevel[getArrayId(aryLevel,clsVals[i][1])][2];
+  }
+  msg += clsMsg.toLowerCase();
+
+  addToList(msg,charName);
+  //return msg.toLowerCase();
+}
+function getArrayId(ary,val) {
+  for (var i = 0; i < ary.length; i++) {
+    if (val >= ary[i][0] && val <= ary[i][1]) {
+      return i;
+    }
+  }
+}
+function addToList(charText, charName) {
+    var ul = document.getElementById('charList');
+    var li = document.createElement('li');
+    var link = document.createElement('a');
+    li.appendChild(link);
+    link.href = 'https://therpgbard.com/wiki/index.php?title=' + charName.replace(" ","_").replace("'","%27") +"&action=edit";
+    link.text = charName + " (" + charText + ")";
+    link.target = "_blank";
+    var linkTxt = charName + " (" + charText + ")";
+    //li.appendChild(document.createTextNode(linkTxt));
+    ul.appendChild(li);
+}
+function getName(raceTxt, gndrId) {
+  switch (raceTxt.toLowerCase()) {
+    case "elf":         return getElfName(gndrId, raceTxt.toLowerCase()); 
+    case "half-elf":    return getElfName(gndrId, raceTxt.toLowerCase()); 
+    case "dwarf":       return getDwarfName(gndrId, raceTxt.toLowerCase()); 
+    case "halfling":    return getHalflingName(gndrId, raceTxt.toLowerCase()); 
+    case "gnome":       return getGnomeName(gndrId, raceTxt.toLowerCase()); 
+    case "tiefling":    return getTieflingName(gndrId, raceTxt.toLowerCase()); 
+    case "vine leshy":  return getVineLeshyName(gndrId, raceTxt.toLowerCase()); 
+    case "dhampir":     return getDhampirName(gndrId, raceTxt.toLowerCase()); 
+    case "dhampir":     return getDhampirName(gndrId, raceTxt.toLowerCase()); 
+    case "half-orc":    return getHalfOrcName(gndrId, raceTxt.toLowerCase()); 
+    case "human":       return getHumanName(gndrId, raceTxt.toLowerCase()); 
+    case "aasimar":     return getAasimarName(gndrId, raceTxt.toLowerCase()); 
+    case "catfolk":     return getCatfolkName(gndrId, raceTxt.toLowerCase()); 
+    case "ifrit":       return getIfritName(gndrId, raceTxt.toLowerCase()); 
+    case "oread":       return getOreadName(gndrId, raceTxt.toLowerCase()); 
+    case "sylph":       return getSylphName(gndrId, raceTxt.toLowerCase()); 
+    case "undine":      return getUndineName(gndrId, raceTxt.toLowerCase()); 
+    default:            return "";
+  }
+}
+
+
+function randomNumber (min,max) {
+  return Math.floor(Math.random() * max) + min;
+}
+function getHalfOrcName(gndrId) {
+  nam = aryHalfOrc1[getRandom(aryHalfOrc1.length-1)-1][2] 
+      + aryHalfOrc2[getRandom(aryHalfOrc2.length-1)-1][2].toLowerCase() + " "
+      + aryHalfOrc3[getRandom(aryHalfOrc3.length-1)-1][2] 
+      + aryHalfOrc4[getRandom(aryHalfOrc4.length-1)-1][2].toLowerCase();
+
+	return nam;
+}
+function getHumanName(gndrId) {
+  nam = aryHuman1[getRandom(aryHuman1.length-1)-1][2] 
+      + aryHuman2[getRandom(aryHuman2.length-1)-1][2].toLowerCase() + " "
+      + aryHuman3[getRandom(aryHuman3.length-1)-1][2] 
+      + aryHuman4[getRandom(aryHuman4.length-1)-1][2].toLowerCase();
+
+	return nam;
+}
+function getAasimarName(gndrId) {
+  nam = aryAasimar1[getRandom(aryAasimar1.length-1)-1][2] 
+      + aryAasimar2[getRandom(aryAasimar2.length-1)-1][2].toLowerCase()
+      + aryAasimar3[getRandom(aryAasimar3.length-1)-1][2].toLowerCase();
+
+	return nam;
+}
+function getCatfolkName(gndrId) {
+  nam = aryCatfolk1[getRandom(aryCatfolk1.length-1)-1][2]
+      + aryCatfolk2[getRandom(aryCatfolk2.length-1)-1][2].toLowerCase();
+
+	return nam;
+}
+function getIfritName(gndrId) {
+  nam = aryIfrit1[getRandom(aryIfrit1.length-1)-1][2]
+      + aryIfrit2[getRandom(aryIfrit2.length-1)-1][2].toLowerCase();
+
+	return nam;
+}
+function getOreadName(gndrId) {
+  nam = aryOread1[getRandom(aryOread1.length-1)-1][2]
+      + aryOread2[getRandom(aryOread2.length-1)-1][2].toLowerCase();
+
+	return nam;
+}
+function getSylphName(gndrId) {
+  nam = arySylph1[getRandom(arySylph1.length-1)-1][2]
+      + arySylph2[getRandom(arySylph2.length-1)-1][2].toLowerCase();
+
+	return nam;
+}
+function getUndineName(gndrId) {
+  nam = aryUndine1[getRandom(aryUndine1.length-1)-1][2] 
+      + aryUndine2[getRandom(aryUndine2.length-1)-1][2].toLowerCase();
+
+	return nam;
+}
+function getTieflingName(gndrId) {
+  nam = aryTiefling1[getRandom(aryTiefling1.length-1)-1][2]
+      + aryTiefling2[getRandom(aryTiefling2.length-1)-1][2].toLowerCase();
+
+	return nam;
+}
+function getVineLeshyName(gndrId) {
+  nam = aryVineLeshy1[getRandom(aryVineLeshy1.length-1)-1][2] 
+      + aryVineLeshy2[getRandom(aryVineLeshy2.length-1)-1][2].toLowerCase();
+
+	return nam;
+}
+function getDhampirName(gndrId) {
+  nam = aryDhampir1[getRandom(aryDhampir1.length-1)-1][2] 
+      + aryDhampir2[getRandom(aryDhampir2.length-1)-1][2].toLowerCase();
+
+	return nam;
+}
+
+function getHalflingName(gndrId) {
+  val = getRandom(20);
+	
+	if (val >= 1 && val <= 4) {
+    nam = aryHalfling2[getRandom(aryHalfling2.length-1)-1][2];
+	} else if (val >= 5 && val <= 9) {
+    nam = aryHalfling2[getRandom(aryHalfling2.length-1)-1][2] 
+        + aryHalfling2[getRandom(aryHalfling2.length-1)-1][2].toLowerCase();
+	} else if (val >= 10 && val <= 13) {
+		nm1 = aryHalfling2[getRandom(aryHalfling2.length-1)-1][2];
+		nm2 = aryHalfling2[getRandom(aryHalfling2.length-1)-1][2];
+    nm3 = aryHalfling2[getRandom(aryHalfling2.length-1)-1][2];
+       
+    nam = nm1 + " " 
+        + nm2.charAt(0).toUpperCase() + nm2.slice(1) 
+        + nm3.charAt(0).toLowerCase() + nm3.slice(1);
+	} else if (val >= 14 && val <= 19) {
+		nm1 = aryHalfling2[getRandom(aryHalfling2.length-1)-1][2];
+		nm2 = aryHalfling2[getRandom(aryHalfling2.length-1)-1][2];
+    nm3 = aryHalfling2[getRandom(aryHalfling2.length-1)-1][2];
+    nm4 = aryHalfling2[getRandom(aryHalfling2.length-1)-1][2];
+       
+    nam = nm1 + nm2.charAt(0).toLowerCase() + nm2.slice(1) + " " 
+        + nm3.charAt(0).toUpperCase() + nm3.slice(1) 
+        + nm4.charAt(0).toLowerCase() + nm4.slice(1);
+	} else {
+		nm1 = aryHalfling2[getRandom(aryHalfling2.length-1)-1][2];
+		nm2 = aryHalfling3[getRandom(aryHalfling3.length-1)-1][2];
+    nm3 = aryHalfling4[getRandom(aryHalfling4.length-1)-1][2];
+
+    nm2 = nameGenderOptionSplit(nm2,1);
+    nm3 = nameGenderOptionSplit(nm3,gndrId);    
+
+    nam = nm1 + " " 
+        + nm2.charAt(0).toUpperCase() + nm2.slice(1) 
+        + nm3.charAt(0).toLowerCase() + nm3.slice(1);
+	}
+	return nam;
+}
+function getGnomeName(gndrId) {
+  val = getRandom(10);
+	
+	if (val >= 1 && val <= 4) {
+		nm1 = aryHalfling1[getRandom(aryHalfling1.length-1)-1][2];
+    nam = nm1;
+	} else if (val >= 5 && val <= 7) {
+		nm1 = aryHalfling1[getRandom(aryHalfling1.length-1)-1][2];
+		nm2 = aryHalfling1[getRandom(aryHalfling1.length-1)-1][2];
+    
+    nam = nm1 + nm2.toLowerCase();
+	} else if (val >= 8 && val <= 9) {
+		nm1 = aryHalfling1[getRandom(aryHalfling1.length-1)-1][2];
+		nm2 = aryHalfling1[getRandom(aryHalfling1.length-1)-1][2];
+    nm3 = aryHalfling3[getRandom(aryHalfling3.length-1)-1][2];
+    nm4 = aryHalfling4[getRandom(aryHalfling4.length-1)-1][2];
+    
+    nm3 = nameGenderOptionSplit(nm3,0);    
+    nm4 = nameGenderOptionSplit(nm4,gndrId);
+    nam = nm1 + nm2 + " " 
+        + nm3.charAt(0).toUpperCase() + nm3.slice(1) 
+        + nm4.charAt(0).toLowerCase() + nm4.slice(1);
+	} else {
+		nm1 = aryHalfling1[getRandom(aryHalfling1.length-1)-1][2];
+		nm2 = aryHalfling1[getRandom(aryHalfling1.length-1)-1][2];
+		nm3 = aryHalfling1[getRandom(aryHalfling1.length-1)-1][2];
+    
+    nam = nm1 + nm2.toLowerCase() + nm3.toLowerCase();
+	}
+	return nam;
+}
+function getDwarfName(gndrId) {
+
+  nm1 = aryDwarf1[getRandom(aryDwarf1.length-1)-1][2];
+  if (gndrId == 0) {
+    nm2 = aryDwarf2[getRandom(aryDwarf2.length-1)-1][2];
+  } if (gndrId == 1) {
+    nm2 = aryDwarf3[getRandom(aryDwarf3.length-1)-1][2];
+  }
+  nm3 = aryDwarf4[getRandom(aryDwarf4.length-1)-1][2];
+  
+  nm1 = nameGenderOptionSplit(nm1,getRandom(2)-1);    
+  nm2 = nameGenderOptionSplit(nm2,getRandom(2)-1);    
+  nm3 = nameGenderOptionSplit(nm3,getRandom(2)-1);    
+
+  nam = nm1.charAt(0).toUpperCase() + nm1.slice(1) + nm2 + nm3;
+  return nam;
+}
+function getElfName(gndrId, rndVal) {
+  if (rndVal == "half-elf") { 
+    val = 8; 
+  } else { 
+	  val = getRandom(10);
+  }
+	
+	if (val >= 1 && val <= 2) {
+		nm1 = aryElfTbl1[getRandom(aryElfTbl1.length-1)-1][2];
+		nm2 = aryElfTbl2[getRandom(aryElfTbl2.length-1)-1][2];
+    
+    nm2 = nameGenderOptionSplit(nm2,gndrId);    
+
+    nam = nm1 + nm2;
+	} else if (val >= 3 && val <= 7) {
+		nm1 = aryElfTbl1[getRandom(aryElfTbl1.length-1)-1][2];
+		nm2 = aryElfTbl2[getRandom(aryElfTbl2.length-1)-1][2];
+
+    nm2 = nameGenderOptionSplit(nm2,gndrId);    
+
+		nam = nm1 + nm2;
+	} else if (val >= 8 && val <= 9) {
+		nmf1 = aryElfTbl1[getRandom(aryElfTbl1.length-1)-1][2];
+		nmf2 = aryElfTbl2[getRandom(aryElfTbl2.length-1)-1][2];
+		nml1 = aryElfTbl1[getRandom(aryElfTbl1.length-1)-1][2];
+		nml2 = aryElfTbl2[getRandom(aryElfTbl2.length-1)-1][2];
+		nml3 = aryElfTbl2[getRandom(aryElfTbl2.length-1)-1][2];
+
+    nmf2 = nameGenderOptionSplit(nmf2,gndrId);    
+    nml2 = nameGenderOptionSplit(nml2,gndrId);    
+    nml3 = nameGenderOptionSplit(nml3,gndrId);    
+
+		nam = nmf1 + nmf2 + ' ' + nml1 + nml2 + nml3;
+	} else {
+		nm1 = aryElfTbl2[getRandom(aryElfTbl2.length-1)-1][2];
+		nm2 = aryElfTbl1[getRandom(aryElfTbl1.length-1)-1][2];
+		nm3 = aryElfTbl2[getRandom(aryElfTbl2.length-1)-1][2];
+		nm4 = aryElfTbl2[getRandom(aryElfTbl2.length-1)-1][2];
+
+    nm1 = nameGenderOptionSplit(nm1,gndrId);    
+    nm3 = nameGenderOptionSplit(nm3,gndrId);    
+    nm4 = nameGenderOptionSplit(nm4,gndrId);    
+
+		nam = nm1.charAt(0).toUpperCase() + nm1.slice(1) + "'" 
+        + nm2.charAt(0).toLowerCase() + nm2.slice(1) + nm3 + nm4;
+	}
+	return nam;
+}
+function nameGenderOptionSplit(nm,gndrId) {
+    if (nm.indexOf('/') > 1) {
+      nm = nm.split("/");
+      nm = nm[gndrId];
+    }
+    if (nm.indexOf(';') > 1) {
+      nm = nm.split(";");
+      nm = nm[getRandom(nm.length-1)-1];
+    }
+    return nm.replace("-","");
+}
+function getElement(elm) {
+	return elm[randomNumber(1,elm.length)];
+}
+function copyValue() {
+// Plan to copy the element on click
+  var copyText = document
+                  .getElementById("myInput")
+                  .select()
+                  .setSelectionRange(0, 99999);
+
+  navigator.clipboard.writeText(copyText.value);
+}
+</script>
+</head>
+<body>
+<ol id="charList"></ol>
+<script>
+for (var i = 1; i <= 1000; i++) {
+  setData();
+}
+document.body.addEventListener("click", function(e) {
+	// e.target was the clicked element
+	if(e.target && e.target.nodeName == "A") {
+    navigator.clipboard.writeText(e.target.innerText);
+  }
+});
+</script>
+</body>
+</html>
